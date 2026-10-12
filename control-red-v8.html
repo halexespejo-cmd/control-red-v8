@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<!-- saved from url=(1403)https://espejo.taile3d6d3.ts.net/?v=1791745732#tgWebAppData=query_id%3DAAGZhhNHAwAAAJmGE0el8tVj%26user%3D%257B%2522id%2522%253A7634912921%252C%2522first_name%2522%253A%2522h%2522%252C%2522last_name%2522%253A%2522%2522%252C%2522language_code%2522%253A%2522es%2522%252C%2522is_premium%2522%253Atrue%252C%2522allows_write_to_pm%2522%253Atrue%252C%2522photo_url%2522%253A%2522https%253A%255C%252F%255C%252Ft.me%255C%252Fi%255C%252Fuserpic%255C%252F320%255C%252FAUQ_xXbMgHSHVCkZc0EBJFnzaMob_nV16S2utnXLdnjyBqPlf9RVD5P8TZry4JxR.svg%2522%257D%26auth_date%3D1791769956%26signature%3D5t8WvhkvJQhScU00CHVW0OAI5Jl_hvH7v71luoSVzsHgcSicQ_kj2aaFApyVBBVrEJGQ-%2DOdhSTxtuTAgXcJCg%26hash%3D2ca56a540d5b4f194c31cdae0b7a95e638c88c88a6e094abbf796023ad714ea6&tgWebAppVersion=9.6&tgWebAppPlatform=weba&tgWebAppThemeParams=%7B%22bg_color%22%3A%22%23ffffff%22%2C%22text_color%22%3A%22%23000000%22%2C%22hint_color%22%3A%22%23707579%22%2C%22link_color%22%3A%22%233390ec%22%2C%22button_color%22%3A%22%233390ec%22%2C%22button_text_color%22%3A%22%23ffffff%22%2C%22secondary_bg_color%22%3A%22%23f4f4f5%22%2C%22header_bg_color%22%3A%22%23ffffff%22%2C%22accent_text_color%22%3A%22%233390ec%22%2C%22section_bg_color%22%3A%22%23ffffff%22%2C%22section_header_text_color%22%3A%22%23707579%22%2C%22subtitle_text_color%22%3A%22%23707579%22%2C%22destructive_text_color%22%3A%22%23e53935%22%2C%22section_separator_color%22%3A%22%23c8c6cc%22%7D -->
+<html lang="es" style="--tg-color-scheme: light; --tg-theme-bg-color: #ffffff; --tg-theme-text-color: #000000; --tg-theme-hint-color: #707579; --tg-theme-link-color: #3390ec; --tg-theme-button-color: #3390ec; --tg-theme-button-text-color: #ffffff; --tg-theme-secondary-bg-color: #f4f4f5; --tg-theme-header-bg-color: #ffffff; --tg-theme-accent-text-color: #3390ec; --tg-theme-section-bg-color: #ffffff; --tg-theme-section-header-text-color: #707579; --tg-theme-subtitle-text-color: #707579; --tg-theme-destructive-text-color: #e53935; --tg-theme-section-separator-color: #c8c6cc; --tg-viewport-height: 690px; --tg-viewport-stable-height: 690px; --tg-safe-area-inset-top: 0px; --tg-safe-area-inset-bottom: 0px; --tg-safe-area-inset-left: 0px; --tg-safe-area-inset-right: 0px; --tg-content-safe-area-inset-top: 0px; --tg-content-safe-area-inset-bottom: 0px; --tg-content-safe-area-inset-left: 0px; --tg-content-safe-area-inset-right: 0px;"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Control de red</title>
+<script src="./telegram-web-app.js.descarga" async=""></script>
+<style>
+  :root{
+    --bg: var(--tg-theme-bg-color, #17212b);
+    --bg2: var(--tg-theme-secondary-bg-color, #232e3c);
+    --txt: var(--tg-theme-text-color, #ffffff);
+    --hint: var(--tg-theme-hint-color, #8b98a5);
+    --btn: var(--tg-theme-button-color, #2ea6ff);
+    --btntxt: var(--tg-theme-button-text-color, #ffffff);
+    --danger:#e5484d; --ok:#30a46c;
+    --chip1:#2ea6ff; --chip2:#7b5cff;
+    --sep: rgba(128,128,128,.26);
+    --soft: rgba(128,128,128,.14);
+  }
+  /* MODO CLARO (manual override) */
+  body.light-mode{
+    --bg: #ffffff;
+    --bg2: #f5f7fa;
+    --txt: #000000;
+    --hint: #707579;
+    --btn: #2ea6ff;
+    --btntxt: #ffffff;
+    --sep: rgba(128,128,128,.2);
+    --soft: rgba(128,128,128,.08);
+  }
+  /* MODO OSCURO (manual override) */
+  body.dark-mode{
+    --bg: #17212b;
+    --bg2: #232e3c;
+    --txt: #ffffff;
+    --hint: #8b98a5;
+    --btn: #2ea6ff;
+    --btntxt: #ffffff;
+    --sep: rgba(255,255,255,.15);
+    --soft: rgba(255,255,255,.1);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);
+       font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+       padding:calc(10px + env(safe-area-inset-top)) 12px calc(28px + env(safe-area-inset-bottom));}
+  h1{font-size:21px;margin:0 0 3px;letter-spacing:-.01em}
+  .subline{font-size:12px;color:var(--hint)}
+  h2{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--hint);
+     margin:20px 2px 8px;display:flex;justify-content:space-between;align-items:center}
+  h2 .n{font-size:11px;background:var(--soft);color:var(--hint);border-radius:999px;
+        padding:2px 8px;letter-spacing:0;text-transform:none}
+  .card{background:var(--bg2);border-radius:14px;padding:11px 14px;margin-bottom:10px}
+  .row{display:flex;justify-content:space-between;gap:10px;padding:5px 0;font-size:14px}
+  .row span:first-child{color:var(--hint)}
+  .row b{font-weight:600;text-align:right}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .chip{font-size:12px;background:var(--soft);border-radius:999px;padding:4px 10px}
+  .chip.red{background:rgba(229,72,77,.18);color:#ff9ea0}
+  .chip.green{background:rgba(48,164,108,.18);color:#7ee2b0}
+  .dev{display:flex;align-items:center;gap:10px;padding:11px 0;border-top:1px solid var(--sep)}
+  .dev:first-child{border-top:0}
+  /* --- iconos conmutables: A línea fina · B duotono · C chip (C = por defecto) --- */
+  .ico{width:38px;height:38px;border-radius:12px;flex:0 0 auto;position:relative;
+       display:flex;align-items:center;justify-content:center;
+       background:linear-gradient(160deg,var(--chip1),var(--chip2));
+       box-shadow:0 2px 8px rgba(46,166,255,.22)}
+  .wico{position:relative;display:inline-flex;width:20px;height:20px}
+  .hico .wico{width:15px;height:15px}
+  .wico svg{position:absolute;inset:0;width:100%;height:100%;fill:none;
+            stroke-linecap:round;stroke-linejoin:round}
+  .wico svg.halo{display:none}
+  .ico .wico svg.fg{stroke:#fff;stroke-width:1.9}
+  /* A · línea fina */
+  .estA .ico{background:var(--soft);box-shadow:none}
+  .estA .ico .wico{width:24px;height:24px}
+  .estA .ico .wico svg.fg{stroke:var(--txt);stroke-width:1.6}
+  /* B · duotono */
+  .estB .ico{background:var(--soft);box-shadow:none}
+  .estB .ico .wico{width:24px;height:24px}
+  .estB .ico .wico svg.fg{stroke:var(--btn);stroke-width:1.7}
+  .estB .ico .wico svg.halo{display:block;stroke:var(--btn);stroke-width:6;opacity:.18}
+  /* equipo cortado: chip rojo en C, icono teñido en A y B */
+  .dev.off .ico{background:linear-gradient(160deg,#e5484d,#f0763a);
+                box-shadow:0 2px 8px rgba(229,72,77,.28)}
+  .estA .dev.off .ico,.estB .dev.off .ico{background:rgba(229,72,77,.15);box-shadow:none}
+  .estA .dev.off .ico .wico svg.fg{stroke:#ff8b8f}
+  .estB .dev.off .ico .wico svg.fg,.estB .dev.off .ico .wico svg.halo{stroke:#e5484d}
+  /* títulos de grupo */
+  .hico{display:inline-flex;gap:6px;align-items:center}
+  .hico .wico svg{stroke:var(--btn);stroke-width:2}
+  .estB .hico .wico svg.halo{display:block;stroke-width:6;opacity:.18}
+  /* iconos dentro de botones y avisos (iguales en los 3 estilos) */
+  button svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;
+             stroke-linecap:round;stroke-linejoin:round;vertical-align:-2.5px;margin-right:3px}
+  .nm .pen svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.9;
+               vertical-align:-2px;margin:0}
+  #banner svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.9;
+              stroke-linecap:round;stroke-linejoin:round;vertical-align:-2px;margin-right:3px}
+  /* muestras del selector de estilo */
+  #stlist .wrow{cursor:pointer}
+  #stlist .ico{width:34px;height:34px}
+  .estC .ico{background:linear-gradient(160deg,var(--chip1),var(--chip2));
+             box-shadow:0 2px 8px rgba(46,166,255,.22)}
+  .estC .ico .wico{width:20px;height:20px}
+  .estC .ico .wico svg.fg{stroke:#fff;stroke-width:1.9}
+  .meta{flex:1;min-width:0}
+  .nm{font-size:15px;display:flex;align-items:center;gap:6px;min-width:0}
+  .nm .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .nm .pen{color:var(--hint);font-size:12px;padding:0 2px}
+  .sub{font-size:12px;color:var(--hint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mono{font-variant-numeric:tabular-nums}
+  button{font:inherit;border:0;border-radius:10px;padding:9px 13px;background:var(--btn);
+         color:var(--btntxt);font-weight:600}
+  button.ghost{background:transparent;color:var(--btn);border:1px solid var(--btn)}
+  button.danger{background:transparent;color:#ff8b8f;border:1px solid rgba(229,72,77,.65)}
+  button.ok{background:var(--ok);color:#fff}
+  button.sm{padding:7px 10px;font-size:13px;border-radius:9px}
+  button.on{background:var(--soft);border-color:transparent;color:var(--txt)}
+  button:disabled{opacity:.5}
+  .pill{font-size:11px;padding:2px 8px;border-radius:999px;background:var(--soft);
+        color:var(--hint);white-space:nowrap}
+  .pill.off{background:rgba(229,72,77,.2);color:#ff9ea0}
+  .pill.time{background:rgba(255,164,76,.18);color:#ffc46b}
+  .toolbar{display:flex;gap:8px;align-items:center;margin:2px 0 8px}
+  .toolbar input{flex:1;min-width:0;font:inherit;font-size:14px;padding:9px 12px;border-radius:10px;
+        border:1px solid var(--sep);background:var(--bg2);color:var(--txt)}
+  .bulk{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap}
+  #banner{font-size:12px;color:var(--hint);margin:2px 2px 0;line-height:1.45}
+  #banner.warn{color:#ffc46b}
+  .wrow{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--sep)}
+  .wrow:first-child{border-top:0}
+  .wrow .meta{font-size:14px}
+  .spin{display:inline-block;animation:r 1s linear infinite}@keyframes r{to{transform:rotate(360deg)}}
+  #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(18px + env(safe-area-inset-bottom));
+         background:#333c47;color:#fff;font-size:13px;padding:10px 14px;border-radius:12px;
+         max-width:88vw;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9;text-align:center}
+  #toast.on{opacity:1}
+  .ovl{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;align-items:center;
+       justify-content:center;padding:22px;z-index:10}
+  .ovl.on{display:flex}
+  .ovl .box{background:var(--bg2);border-radius:16px;padding:18px;width:100%;max-width:360px}
+  .ovl .t{font-size:16px;font-weight:600;margin-bottom:6px}
+  .ovl .d{font-size:13px;color:var(--hint);margin-bottom:14px;line-height:1.45}
+  .ovl .acts{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+  .times{display:flex;gap:10px;align-items:center;margin-bottom:14px}
+  .times label{font-size:13px;color:var(--hint);flex:0 0 auto}
+  .times input{flex:1;min-width:0;font:inherit;font-size:15px;padding:9px 10px;border-radius:10px;
+       border:1px solid var(--sep);background:var(--bg);color:var(--txt)}
+  #nmodal input{width:100%;font:inherit;font-size:15px;padding:10px 12px;border-radius:10px;
+        border:1px solid var(--sep);background:var(--bg);color:var(--txt);margin-bottom:14px}
+</style>
+<style>* {
+  scrollbar-width: thin;
+  scrollbar-color: #5a5a5a4d transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  background-color: #5a5a5a4d;
+}
+
+*::-webkit-scrollbar-corner {
+  background-color: transparent;
+}</style></head>
+<body class="estC">
+  <h1 id="netname">BOSQUE_DE_ARCE 2574_5G</h1>
+  <div class="subline" id="netdriver">host_lan · bloqueo: simulate · v8</div>
+
+  <h2 id="h2red"><span class="hico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.4 9.4a13 13 0 0 1 17.2 0"></path><path d="M6.4 12.9a9 9 0 0 1 11.2 0"></path><path d="M9.4 16.3a4.6 4.6 0 0 1 5.2 0"></path><circle cx="12" cy="19.4" r=".9"></circle></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.4 9.4a13 13 0 0 1 17.2 0"></path><path d="M6.4 12.9a9 9 0 0 1 11.2 0"></path><path d="M9.4 16.3a4.6 4.6 0 0 1 5.2 0"></path><circle cx="12" cy="19.4" r=".9"></circle></svg></span>Red</span><span class="n" id="ts">20:01:39</span></h2>
+  <div class="card" id="netcard">
+    <div class="row"><span>Red (SSID)</span><b id="ssid">BOSQUE_DE_ARCE 2574_5G</b></div>
+    <div class="row"><span>Puerta de enlace</span><b id="gw" class="mono">192.168.1.254</b></div>
+    <div class="row"><span>Este equipo</span><b id="myip" class="mono">192.168.1.80</b></div>
+    <div class="row"><span>IP pública</span><b id="wan" class="mono">189.231.65.5</b></div>
+    <div class="chips">
+      <span class="chip" id="chipcnt">Equipos: 12</span>
+      <span class="chip green" id="chipoff">Cortados: 0</span>
+    </div>
+  </div>
+  <div id="banner" class=""><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2l7.2 2.6v5.4c0 4.4-3 7.4-7.2 9.6-4.2-2.2-7.2-5.2-7.2-9.6V5.8z"></path><path d="M9 12.2l2.2 2.2 4-4"></path></svg>modo simulado: se marca en la app pero NO se corta el tráfico real · arp_block configurado pero no disponible: no se pudo identificar el adaptador de red (scapy necesita el nombre, no la IP) — modo simulado</div>
+
+  <h2 id="h2dev"><span class="hico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.4" height="6.4" rx="1.6"></rect><rect x="13.6" y="4" width="6.4" height="6.4" rx="1.6"></rect><rect x="4" y="13.6" width="6.4" height="6.4" rx="1.6"></rect><rect x="13.6" y="13.6" width="6.4" height="6.4" rx="1.6"></rect></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="6.4" height="6.4" rx="1.6"></rect><rect x="13.6" y="4" width="6.4" height="6.4" rx="1.6"></rect><rect x="4" y="13.6" width="6.4" height="6.4" rx="1.6"></rect><rect x="13.6" y="13.6" width="6.4" height="6.4" rx="1.6"></rect></svg></span>Dispositivos</span></h2>
+  <div class="toolbar">
+    <input id="q" type="search" placeholder="Buscar por IP, MAC o nombre…" autocomplete="off">
+    <button id="onlyoff" class="ghost sm"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M6.6 17.4l10.8-10.8"></path></svg></button>
+    <button id="darkmode" class="ghost sm" title="Modo nocturno/claro"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg></button>
+    <button id="style" class="ghost sm" title="Estilo de iconos"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.4a8.6 8.6 0 0 0 0 17.2c1.3 0 2-.8 2-1.7 0-.5-.2-.8-.5-1.1-.3-.3-.5-.6-.5-1 0-.9.7-1.6 1.6-1.6h1.2a4.8 4.8 0 0 0 4.8-4.8c0-3.9-3.9-7-8.6-7z"></path><circle cx="8.6" cy="10" r="1.1"></circle><circle cx="12" cy="8" r="1.1"></circle><circle cx="15.4" cy="10" r="1.1"></circle></svg></button>
+    <button id="refresh" class="ghost sm"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 0-2.4 5.7"></path><path d="M20 6.2V12h-5.8"></path></svg></button>
+  </div>
+  <div class="bulk" id="bulk"><button class="ghost sm" id="alloff"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M6.6 17.4l10.8-10.8"></path></svg>Cortar los 8 restantes</button></div>
+  <div id="groups"><h2><span class="hico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="13.5" width="18" height="7" rx="2.2"></rect><path d="M12 13.5V9.2"></path><path d="M8.6 6.9a4.6 4.6 0 0 1 6.8 0"></path><path d="M6.1 4.3a8 8 0 0 1 11.8 0"></path></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="13.5" width="18" height="7" rx="2.2"></rect><path d="M12 13.5V9.2"></path><path d="M8.6 6.9a4.6 4.6 0 0 1 6.8 0"></path><path d="M6.1 4.3a8 8 0 0 1 11.8 0"></path></svg></span>Router y red</span><span class="n">1</span></h2>
+      <div class="card">
+    <div class="dev ">
+      <div class="ico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="13.5" width="18" height="7" rx="2.2"></rect><path d="M12 13.5V9.2"></path><path d="M8.6 6.9a4.6 4.6 0 0 1 6.8 0"></path><path d="M6.1 4.3a8 8 0 0 1 11.8 0"></path></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="13.5" width="18" height="7" rx="2.2"></rect><path d="M12 13.5V9.2"></path><path d="M8.6 6.9a4.6 4.6 0 0 1 6.8 0"></path><path d="M6.1 4.3a8 8 0 0 1 11.8 0"></path></svg></span></div>
+      <div class="meta">
+        <div class="nm"><span class="t" data-namemac="c4:eb:ff:51:08:30">zte corporation</span>
+          <span class="pen" data-namemac="c4:eb:ff:51:08:30"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4.2L20 8.2 15.8 4 4 15.8z"></path><path d="M14.2 5.6l4.2 4.2"></path></svg></span>
+          
+          
+        </div>
+        <div class="sub mono">192.168.1.254 · c4:eb:ff:51:08:30 · zte corporation</div>
+      </div>
+      <button class="ghost sm" data-sched="c4:eb:ff:51:08:30" title="Horario de corte"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M12 7.2V12l3.2 1.9"></path></svg></button>
+      <button class="sm danger" data-mac="c4:eb:ff:51:08:30" data-act="1">
+        Cortar
+      </button>
+    </div></div><h2><span class="hico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="12.5" rx="2.2"></rect><path d="M9 20.5h6"></path><path d="M12 17v3.5"></path><path d="M10.8 9l3.7 2.1-3.7 2.1z"></path></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="12.5" rx="2.2"></rect><path d="M9 20.5h6"></path><path d="M12 17v3.5"></path><path d="M10.8 9l3.7 2.1-3.7 2.1z"></path></svg></span>TV y streaming</span><span class="n">3</span></h2>
+      <div class="card">
+    <div class="dev ">
+      <div class="ico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="12.5" rx="2.2"></rect><path d="M9 20.5h6"></path><path d="M12 17v3.5"></path><path d="M10.8 9l3.7 2.1-3.7 2.1z"></path></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="12.5" rx="2.2"></rect><path d="M9 20.5h6"></path><path d="M12 17v3.5"></path><path d="M10.8 9l3.7 2.1-3.7 2.1z"></path></svg></span></div>
+      <div class="meta">
+        <div class="nm"><span class="t" data-namemac="c0:8d:51:fc:17:8e">Amazon Technologies Inc.</span>
+          <span class="pen" data-namemac="c0:8d:51:fc:17:8e"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4.2L20 8.2 15.8 4 4 15.8z"></path><path d="M14.2 5.6l4.2 4.2"></path></svg></span>
+          
+          
+        </div>
+        <div class="sub mono">192.168.1.64 · c0:8d:51:fc:17:8e · Amazon Technologies Inc.</div>
+      </div>
+      <button class="ghost sm" data-sched="c0:8d:51:fc:17:8e" title="Horario de corte"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M12 7.2V12l3.2 1.9"></path></svg></button>
+      <button class="sm danger" data-mac="c0:8d:51:fc:17:8e" data-act="1">
+        Cortar
+      </button>
+    </div>
+    <div class="dev ">
+      <div class="ico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="12.5" rx="2.2"></rect><path d="M9 20.5h6"></path><path d="M12 17v3.5"></path><path d="M10.8 9l3.7 2.1-3.7 2.1z"></path></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="12.5" rx="2.2"></rect><path d="M9 20.5h6"></path><path d="M12 17v3.5"></path><path d="M10.8 9l3.7 2.1-3.7 2.1z"></path></svg></span></div>
+      <div class="meta">
+        <div class="nm"><span class="t" data-namemac="90:a8:22:39:7f:25">Amazon Technologies Inc.</span>
+          <span class="pen" data-namemac="90:a8:22:39:7f:25"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4.2L20 8.2 15.8 4 4 15.8z"></path><path d="M14.2 5.6l4.2 4.2"></path></svg></span>
+          
+          
+        </div>
+        <div class="sub mono">192.168.1.65 · 90:a8:22:39:7f:25 · Amazon Technologies Inc.</div>
+      </div>
+      <button class="ghost sm" data-sched="90:a8:22:39:7f:25" title="Horario de corte"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M12 7.2V12l3.2 1.9"></path></svg></button>
+      <button class="sm danger" data-mac="90:a8:22:39:7f:25" data-act="1">
+        Cortar
+      </button>
+    </div>
+    <div class="dev ">
+      <div class="ico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="12.5" rx="2.2"></rect><path d="M9 20.5h6"></path><path d="M12 17v3.5"></path><path d="M10.8 9l3.7 2.1-3.7 2.1z"></path></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="12.5" rx="2.2"></rect><path d="M9 20.5h6"></path><path d="M12 17v3.5"></path><path d="M10.8 9l3.7 2.1-3.7 2.1z"></path></svg></span></div>
+      <div class="meta">
+        <div class="nm"><span class="t" data-namemac="10:96:93:c6:ea:45">Amazon Technologies</span>
+          <span class="pen" data-namemac="10:96:93:c6:ea:45"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4.2L20 8.2 15.8 4 4 15.8z"></path><path d="M14.2 5.6l4.2 4.2"></path></svg></span>
+          
+          
+        </div>
+        <div class="sub mono">192.168.1.66 · 10:96:93:c6:ea:45 · Amazon Technologies</div>
+      </div>
+      <button class="ghost sm" data-sched="10:96:93:c6:ea:45" title="Horario de corte"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M12 7.2V12l3.2 1.9"></path></svg></button>
+      <button class="sm danger" data-mac="10:96:93:c6:ea:45" data-act="1">
+        Cortar
+      </button>
+    </div></div><h2><span class="hico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="10.5" rx="1.6"></rect><path d="M2.2 18.6h19.6"></path><path d="M9.5 18.6h5"></path></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="10.5" rx="1.6"></rect><path d="M2.2 18.6h19.6"></path><path d="M9.5 18.6h5"></path></svg></span>Móviles y computadoras</span><span class="n">1</span></h2>
+      <div class="card">
+    <div class="dev ">
+      <div class="ico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="10.5" rx="1.6"></rect><path d="M2.2 18.6h19.6"></path><path d="M9.5 18.6h5"></path></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="10.5" rx="1.6"></rect><path d="M2.2 18.6h19.6"></path><path d="M9.5 18.6h5"></path></svg></span></div>
+      <div class="meta">
+        <div class="nm"><span class="t" data-namemac="f6:aa:56:16:98:d7">Equipo 192.168.1.67</span>
+          <span class="pen" data-namemac="f6:aa:56:16:98:d7"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4.2L20 8.2 15.8 4 4 15.8z"></path><path d="M14.2 5.6l4.2 4.2"></path></svg></span>
+          
+          
+        </div>
+        <div class="sub mono">192.168.1.67 · f6:aa:56:16:98:d7</div>
+      </div>
+      <button class="ghost sm" data-sched="f6:aa:56:16:98:d7" title="Horario de corte"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M12 7.2V12l3.2 1.9"></path></svg></button>
+      <button class="sm danger" data-mac="f6:aa:56:16:98:d7" data-act="1">
+        Cortar
+      </button>
+    </div></div><h2><span class="hico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.4h2.9L8.4 6.2h7.2l1.5 2.2H20a1 1 0 0 1 1 1v8.6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.4a1 1 0 0 1 1-1z"></path><circle cx="12" cy="13.6" r="3.3"></circle></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.4h2.9L8.4 6.2h7.2l1.5 2.2H20a1 1 0 0 1 1 1v8.6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.4a1 1 0 0 1 1-1z"></path><circle cx="12" cy="13.6" r="3.3"></circle></svg></span>Cámaras</span><span class="n">1</span></h2>
+      <div class="card">
+    <div class="dev ">
+      <div class="ico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.4h2.9L8.4 6.2h7.2l1.5 2.2H20a1 1 0 0 1 1 1v8.6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.4a1 1 0 0 1 1-1z"></path><circle cx="12" cy="13.6" r="3.3"></circle></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8.4h2.9L8.4 6.2h7.2l1.5 2.2H20a1 1 0 0 1 1 1v8.6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.4a1 1 0 0 1 1-1z"></path><circle cx="12" cy="13.6" r="3.3"></circle></svg></span></div>
+      <div class="meta">
+        <div class="nm"><span class="t" data-namemac="88:de:39:f1:06:40">Hangzhou Hikvision</span>
+          <span class="pen" data-namemac="88:de:39:f1:06:40"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4.2L20 8.2 15.8 4 4 15.8z"></path><path d="M14.2 5.6l4.2 4.2"></path></svg></span>
+          
+          
+        </div>
+        <div class="sub mono">192.168.1.73 · 88:de:39:f1:06:40 · Hangzhou Hikvision</div>
+      </div>
+      <button class="ghost sm" data-sched="88:de:39:f1:06:40" title="Horario de corte"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M12 7.2V12l3.2 1.9"></path></svg></button>
+      <button class="sm danger" data-mac="88:de:39:f1:06:40" data-act="1">
+        Cortar
+      </button>
+    </div></div><h2><span class="hico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a6 6 0 0 0-3.4 10.9v2.3h6.8v-2.3A6 6 0 0 0 12 3.2z"></path><path d="M9.6 18.6h4.8"></path><path d="M10.6 21h2.8"></path></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a6 6 0 0 0-3.4 10.9v2.3h6.8v-2.3A6 6 0 0 0 12 3.2z"></path><path d="M9.6 18.6h4.8"></path><path d="M10.6 21h2.8"></path></svg></span>Domótica e IoT</span><span class="n">3</span></h2>
+      <div class="card">
+    <div class="dev ">
+      <div class="ico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a6 6 0 0 0-3.4 10.9v2.3h6.8v-2.3A6 6 0 0 0 12 3.2z"></path><path d="M9.6 18.6h4.8"></path><path d="M10.6 21h2.8"></path></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a6 6 0 0 0-3.4 10.9v2.3h6.8v-2.3A6 6 0 0 0 12 3.2z"></path><path d="M9.6 18.6h4.8"></path><path d="M10.6 21h2.8"></path></svg></span></div>
+      <div class="meta">
+        <div class="nm"><span class="t" data-namemac="a8:bb:50:a1:bf:16">WiZ IoT Company Limited</span>
+          <span class="pen" data-namemac="a8:bb:50:a1:bf:16"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4.2L20 8.2 15.8 4 4 15.8z"></path><path d="M14.2 5.6l4.2 4.2"></path></svg></span>
+          
+          
+        </div>
+        <div class="sub mono">192.168.1.71 · a8:bb:50:a1:bf:16 · WiZ IoT Company Limited</div>
+      </div>
+      <button class="ghost sm" data-sched="a8:bb:50:a1:bf:16" title="Horario de corte"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M12 7.2V12l3.2 1.9"></path></svg></button>
+      <button class="sm danger" data-mac="a8:bb:50:a1:bf:16" data-act="1">
+        Cortar
+      </button>
+    </div>
+    <div class="dev ">
+      <div class="ico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a6 6 0 0 0-3.4 10.9v2.3h6.8v-2.3A6 6 0 0 0 12 3.2z"></path><path d="M9.6 18.6h4.8"></path><path d="M10.6 21h2.8"></path></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a6 6 0 0 0-3.4 10.9v2.3h6.8v-2.3A6 6 0 0 0 12 3.2z"></path><path d="M9.6 18.6h4.8"></path><path d="M10.6 21h2.8"></path></svg></span></div>
+      <div class="meta">
+        <div class="nm"><span class="t" data-namemac="cc:b8:5e:0f:12:70">Shenzhen Phaten Tech. LTD</span>
+          <span class="pen" data-namemac="cc:b8:5e:0f:12:70"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4.2L20 8.2 15.8 4 4 15.8z"></path><path d="M14.2 5.6l4.2 4.2"></path></svg></span>
+          
+          
+        </div>
+        <div class="sub mono">192.168.1.78 · cc:b8:5e:0f:12:70 · Shenzhen Phaten Tech. LTD</div>
+      </div>
+      <button class="ghost sm" data-sched="cc:b8:5e:0f:12:70" title="Horario de corte"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M12 7.2V12l3.2 1.9"></path></svg></button>
+      <button class="sm danger" data-mac="cc:b8:5e:0f:12:70" data-act="1">
+        Cortar
+      </button>
+    </div>
+    <div class="dev ">
+      <div class="ico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a6 6 0 0 0-3.4 10.9v2.3h6.8v-2.3A6 6 0 0 0 12 3.2z"></path><path d="M9.6 18.6h4.8"></path><path d="M10.6 21h2.8"></path></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3.2a6 6 0 0 0-3.4 10.9v2.3h6.8v-2.3A6 6 0 0 0 12 3.2z"></path><path d="M9.6 18.6h4.8"></path><path d="M10.6 21h2.8"></path></svg></span></div>
+      <div class="meta">
+        <div class="nm"><span class="t" data-namemac="a8:bb:50:a1:c7:cf">WiZ IoT Company Limited</span>
+          <span class="pen" data-namemac="a8:bb:50:a1:c7:cf"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4.2L20 8.2 15.8 4 4 15.8z"></path><path d="M14.2 5.6l4.2 4.2"></path></svg></span>
+          
+          
+        </div>
+        <div class="sub mono">192.168.1.93 · a8:bb:50:a1:c7:cf · WiZ IoT Company Limited</div>
+      </div>
+      <button class="ghost sm" data-sched="a8:bb:50:a1:c7:cf" title="Horario de corte"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M12 7.2V12l3.2 1.9"></path></svg></button>
+      <button class="sm danger" data-mac="a8:bb:50:a1:c7:cf" data-act="1">
+        Cortar
+      </button>
+    </div></div><h2><span class="hico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M9.7 9.6a2.4 2.4 0 1 1 3.1 2.3c-.7.3-1.1.9-1.1 1.6v.3"></path><circle cx="11.6" cy="16.4" r=".75"></circle></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M9.7 9.6a2.4 2.4 0 1 1 3.1 2.3c-.7.3-1.1.9-1.1 1.6v.3"></path><circle cx="11.6" cy="16.4" r=".75"></circle></svg></span>Sin identificar</span><span class="n">1</span></h2>
+      <div class="card">
+    <div class="dev ">
+      <div class="ico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M9.7 9.6a2.4 2.4 0 1 1 3.1 2.3c-.7.3-1.1.9-1.1 1.6v.3"></path><circle cx="11.6" cy="16.4" r=".75"></circle></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M9.7 9.6a2.4 2.4 0 1 1 3.1 2.3c-.7.3-1.1.9-1.1 1.6v.3"></path><circle cx="11.6" cy="16.4" r=".75"></circle></svg></span></div>
+      <div class="meta">
+        <div class="nm"><span class="t" data-namemac="1c:ce:51:7d:f8:41">AzureWave Technology Inc.</span>
+          <span class="pen" data-namemac="1c:ce:51:7d:f8:41"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4.2L20 8.2 15.8 4 4 15.8z"></path><path d="M14.2 5.6l4.2 4.2"></path></svg></span>
+          
+          
+        </div>
+        <div class="sub mono">192.168.1.80 · 1c:ce:51:7d:f8:41 · AzureWave Technology Inc.</div>
+      </div>
+      <button class="ghost sm" data-sched="1c:ce:51:7d:f8:41" title="Horario de corte"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M12 7.2V12l3.2 1.9"></path></svg></button>
+      <button class="sm danger" data-mac="1c:ce:51:7d:f8:41" data-act="1">
+        Cortar
+      </button>
+    </div></div></div>
+
+  <h2 id="h2win"><span class="hico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M12 7.2V12l3.2 1.9"></path></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M12 7.2V12l3.2 1.9"></path></svg></span>Horarios</span><span class="n" id="nowt">ahora 20:01</span></h2>
+  <div id="wins"><div class="card"><div class="wrow">
+      <div class="ico"><span class="wico"><svg class="halo" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M12 7.2V12l3.2 1.9"></path></svg><svg class="fg" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.6"></circle><path d="M12 7.2V12l3.2 1.9"></path></svg></span></div>
+      <div class="meta">
+        <div class="nm"><span class="t">10:3d:0a:42:87:0b</span>
+          <span class="pill ">fuera de horario</span></div>
+        <div class="sub mono">21:00 → 23:00 · todos los días</div>
+      </div>
+      <button class="ghost sm" data-wdel="10:3d:0a:42:87:0b|21:00-23:00"><svg class="" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"></path></svg></button>
+    </div></div></div>
+
+  <div id="toast"></div>
+
+  <div class="ovl" id="modal"><div class="box">
+    <div class="t" id="mtitle"></div>
+    <div class="d" id="mtext"></div>
+    <div class="acts" id="macts"></div>
+  </div></div>
+
+  <div class="ovl" id="smodal"><div class="box">
+    <div class="t" id="stitle">Horario</div>
+    <div class="d" id="stext"></div>
+    <div class="times">
+      <label>De</label><input id="sstart" type="time" value="21:00">
+      <label>a</label><input id="send" type="time" value="23:00">
+    </div>
+    <div class="d" id="shint">Se cortará todos los días en esa franja (también si cruza medianoche, p.&nbsp;ej. 22:00 → 07:00). Fuera de la franja el internet vuelve solo.</div>
+    <div class="acts" id="sacts"></div>
+  </div></div>
+
+  <div class="ovl" id="stmodal"><div class="box">
+    <div class="t">Estilo de los iconos</div>
+    <div class="d">Elige cómo se dibujan los iconos. Se guarda en tu teléfono y se aplica al instante.</div>
+    <div class="stbox" id="stlist"></div>
+    <div class="acts"><button class="ghost sm" id="stclose">Cerrar</button></div>
+  </div></div>
+
+  <div class="ovl" id="nmodal"><div class="box">
+    <div class="t">Nombre del equipo</div>
+    <input id="ninput" maxlength="24" placeholder="p. ej. TV sala, Roku, Cámara">
+    <div class="acts" id="nacts"></div>
+  </div></div>
+
+<script>
+const VERSION = "v8";
+// UI_BUILD lo rellena el despliegue con la fecha del propio archivo: si la app en pantalla
+// es más vieja que la que sirve el PC, se recarga sola (Telegram cachea mucho las Mini Apps).
+const UI_BUILD = "1791745732";
+const tgSdk = () => (window.Telegram && window.Telegram.WebApp) ? window.Telegram.WebApp : null;
+function tgInit(){ const t = tgSdk(); if(!t) return; try{ t.ready(); t.expand(); t.setHeaderColor && t.setHeaderColor("secondary_bg_color"); }catch(e){} }
+document.addEventListener("DOMContentLoaded", tgInit);
+setTimeout(tgInit, 1500);
+
+async function api(path, opts={}){
+  const t = tgSdk();
+  const r = await fetch(path, Object.assign({}, opts, {
+    headers: Object.assign({"X-Telegram-Init-Data": t ? t.initData : "", "Content-Type":"application/json"}, opts.headers||{})
+  }));
+  return r.json();
+}
+function esc(s){return (s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+
+// ---- iconos SVG (estilo C: glifo blanco sobre cuadro redondeado con degradado)
+const ICONS = {
+  router:  '<rect x="3" y="13.5" width="18" height="7" rx="2.2"/><path d="M12 13.5V9.2"/><path d="M8.6 6.9a4.6 4.6 0 0 1 6.8 0"/><path d="M6.1 4.3a8 8 0 0 1 11.8 0"/>',
+  tv:      '<rect x="3" y="4.5" width="18" height="12.5" rx="2.2"/><path d="M9 20.5h6"/><path d="M12 17v3.5"/><path d="M10.8 9l3.7 2.1-3.7 2.1z"/>',
+  phone:   '<rect x="7.2" y="2.6" width="9.6" height="18.8" rx="2"/><path d="M12 18.6v.4"/>',
+  laptop:  '<rect x="4" y="5" width="16" height="10.5" rx="1.6"/><path d="M2.2 18.6h19.6"/><path d="M9.5 18.6h5"/>',
+  camera:  '<path d="M4 8.4h2.9L8.4 6.2h7.2l1.5 2.2H20a1 1 0 0 1 1 1v8.6a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.4a1 1 0 0 1 1-1z"/><circle cx="12" cy="13.6" r="3.3"/>',
+  gamepad: '<path d="M7.5 8.2h9a4.2 4.2 0 0 1 4.2 4.3v1a3 3 0 0 1-5.5 1.7l-.4-.6H9.2l-.4.6A3 3 0 0 1 3.3 13.5v-1A4.2 4.2 0 0 1 7.5 8.2z"/><path d="M7.6 12.3h2.2M8.7 11.2v2.2"/><circle cx="15.6" cy="12.4" r=".9"/>',
+  bulb:    '<path d="M12 3.2a6 6 0 0 0-3.4 10.9v2.3h6.8v-2.3A6 6 0 0 0 12 3.2z"/><path d="M9.6 18.6h4.8"/><path d="M10.6 21h2.8"/>',
+  unknown: '<circle cx="12" cy="12" r="8.6"/><path d="M9.7 9.6a2.4 2.4 0 1 1 3.1 2.3c-.7.3-1.1.9-1.1 1.6v.3"/><circle cx="11.6" cy="16.4" r=".75"/>',
+  clock:   '<circle cx="12" cy="12" r="8.6"/><path d="M12 7.2V12l3.2 1.9"/>',
+  search:  '<circle cx="11" cy="11" r="6.6"/><path d="M20 20l-3.6-3.6"/>',
+  refresh: '<path d="M20 12a8 8 0 1 0-2.4 5.7"/><path d="M20 6.2V12h-5.8"/>',
+  ban:     '<circle cx="12" cy="12" r="8.6"/><path d="M6.6 17.4l10.8-10.8"/>',
+  check:   '<path d="M4.8 12.6l4.6 4.6L19.4 7.2"/>',
+  pencil:  '<path d="M4 20h4.2L20 8.2 15.8 4 4 15.8z"/><path d="M14.2 5.6l4.2 4.2"/>',
+  x:       '<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>',
+  shield:  '<path d="M12 3.2l7.2 2.6v5.4c0 4.4-3 7.4-7.2 9.6-4.2-2.2-7.2-5.2-7.2-9.6V5.8z"/><path d="M9 12.2l2.2 2.2 4-4"/>',
+  alert:   '<path d="M12 4.4L21 19.6H3z"/><path d="M12 10v4.2"/><circle cx="12" cy="17" r=".8"/>',
+  wifi:    '<path d="M3.4 9.4a13 13 0 0 1 17.2 0"/><path d="M6.4 12.9a9 9 0 0 1 11.2 0"/><path d="M9.4 16.3a4.6 4.6 0 0 1 5.2 0"/><circle cx="12" cy="19.4" r=".9"/>',
+  grid:    '<rect x="4" y="4" width="6.4" height="6.4" rx="1.6"/><rect x="13.6" y="4" width="6.4" height="6.4" rx="1.6"/><rect x="4" y="13.6" width="6.4" height="6.4" rx="1.6"/><rect x="13.6" y="13.6" width="6.4" height="6.4" rx="1.6"/>',
+  palette: '<path d="M12 3.4a8.6 8.6 0 0 0 0 17.2c1.3 0 2-.8 2-1.7 0-.5-.2-.8-.5-1.1-.3-.3-.5-.6-.5-1 0-.9.7-1.6 1.6-1.6h1.2a4.8 4.8 0 0 0 4.8-4.8c0-3.9-3.9-7-8.6-7z"/><circle cx="8.6" cy="10" r="1.1"/><circle cx="12" cy="8" r="1.1"/><circle cx="15.4" cy="10" r="1.1"/>',
+  moon:    '<path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>',
+  sun:     '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.2 12H2M22 12h-2.2M19.8 19.8l-1.4-1.4M5.6 5.6L4.2 4.2M19.8 4.2l-1.4 1.4M5.6 18.4l-1.4 1.4"/>'
+};
+function svgIco(n, cls){ return `<svg class="${cls||''}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n] || ICONS.unknown}</svg>`; }
+// dos copias del mismo trazo (halo + trazo): el CSS decide cuál se ve en cada estilo
+function dobleIco(n){ return `<span class="wico">${svgIco(n,"halo")}${svgIco(n,"fg")}</span>`; }
+function chipIco(n){ return `<div class="ico">${dobleIco(n)}</div>`; }
+function toast(msg){ const el=document.getElementById("toast"); el.textContent=msg; el.classList.add("on");
+  clearTimeout(toast._t); toast._t=setTimeout(()=>el.classList.remove("on"), 4000); }
+function lsGet(k, def){ try{ const v=localStorage.getItem(k); return v===null?def:JSON.parse(v); }catch(e){ return def; } }
+function lsSet(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); }catch(e){} }
+
+// ---- nombres propios (se guardan en el teléfono, no tocan el PC)
+let NAMES = lsGet("netctl_names", {});
+function nombre(d){
+  const m = (d.mac||"").toLowerCase();
+  return NAMES[m] || d.name || d.vendor || ("Equipo " + (d.ip||""));
+}
+function nombreMac(mac){
+  const d = ALL.find(x=>(x.mac||"").toLowerCase()===(mac||"").toLowerCase());
+  return d ? nombre(d) : mac;
+}
+function abrirNombre(d){
+  const m = (d.mac||"").toLowerCase();
+  const inp = document.getElementById("ninput");
+  inp.value = NAMES[m] || "";
+  const acts = document.getElementById("nacts"); acts.innerHTML = "";
+  const add = (label, cls, fn) => { const b=document.createElement("button"); b.className="sm "+cls; b.textContent=label;
+    b.addEventListener("click", ()=>{ ovlOff("nmodal"); fn(); }); acts.appendChild(b); };
+  if(NAMES[m]) add("Quitar", "ghost", ()=>{ delete NAMES[m]; lsSet("netctl_names", NAMES); render(); renderWins(); });
+  add("Cancelar", "ghost", ()=>{});
+  add("Guardar", "", ()=>{ const v=inp.value.trim(); if(v) NAMES[m]=v; else delete NAMES[m];
+                           lsSet("netctl_names", NAMES); render(); renderWins(); toast("Nombre guardado"); });
+  ovlOn("nmodal");
+  setTimeout(()=>inp.focus(), 50);
+}
+
+// ---- clasificación en grupos
+function cat(d){
+  if(d.is_self) return {k:"self", label:"Este equipo", ico:"laptop"};
+  const t = ((d.type||"")+" "+(d.vendor||"")).toLowerCase();
+  if(/router|ont|módem|modem|zte|huawei|tp-link|tplink|arris|technicolor|mikrotik/.test(t)) return {k:"net", label:"Router y red", ico:"router"};
+  if(/cámara|grabador|hikvision|ezviz|dahua|reolink/.test(t)) return {k:"cam", label:"Cámaras", ico:"camera"};
+  if(/tv|roku|chromecast|fire ?tv|apple ?tv|shield/.test(t)) return {k:"tv", label:"TV y streaming", ico:"tv"};
+  if(/playstation|sony interactive|xbox|nintendo/.test(t)) return {k:"game", label:"Consolas", ico:"gamepad"};
+  if(/iphone|ipad|móvil|movil|samsung|apple|xiaomi|redmi|portátil|portatil|laptop|honor|intel|realtek|broadcom|qualcomm|dell|lenovo|asus|acer|msi|toshiba|gigabyte|hewlett|hp inc|microsoft/.test(t)) return {k:"mov", label:"Móviles y computadoras", ico:"phone"};
+  if(/iot|esp32|smart|wiz|shelly|tuya|enchufe|electrodom|phaten|sonoff/.test(t)) return {k:"iot", label:"Domótica e IoT", ico:"bulb"};
+  return {k:"x", label:"Sin identificar", ico:"unknown"};
+}
+// icono por equipo: dentro de «Móviles y computadoras» distingue portátiles de teléfonos
+function devIco(d){
+  const c = cat(d);
+  const t = ((d.vendor||"")+" "+(d.type||"")).toLowerCase();
+  if(c.k==="mov" && /intel|realtek|broadcom|qualcomm|dell|lenovo|asus|acer|msi|toshiba|gigabyte|hewlett|hp inc|microsoft|laptop|portátil|portatil/.test(t)) return "laptop";
+  return c.ico;
+}
+const ORDER = ["net","tv","mov","cam","game","iot","x","self"];
+function ipnum(ip){ return (ip||"").split(".").reduce((a,p)=>a*256+(parseInt(p,10)||0),0); }
+function mins(since){ if(!since) return ""; const m=(Date.now()/1000-since)/60;
+  return m<1 ? "ahora" : (m<60 ? Math.round(m)+" min" : Math.round(m/60)+" h"); }
+function estadoPausa(d){
+  if(!d.paused) return "";
+  if(d.window_range) return "horario " + d.window_range;
+  if(d.paused_until){ const m=Math.ceil((d.paused_until - Date.now()/1000)/60);
+    return m<=0 ? "cortado · se reanuda ya" : "cortado · quedan "+m+" min"; }
+  return "cortado" + (mins(d.paused_since) ? " · "+mins(d.paused_since) : "");
+}
+
+let ALL = [], WINS = [], NOW = "", Q = "", ONLYOFF = lsGet("netctl_onlyoff", false);
+
+function deviceRow(d){
+  return `
+    <div class="dev ${d.paused?"off":""}">
+      ${chipIco(devIco(d))}
+      <div class="meta">
+        <div class="nm"><span class="t" data-namemac="${esc(d.mac)}">${esc(nombre(d))}</span>
+          <span class="pen" data-namemac="${esc(d.mac)}">${svgIco("pencil")}</span>
+          ${d.is_self?'<span class="pill">este equipo</span>':''}
+          ${d.paused?`<span class="pill ${d.window_range||d.paused_until?"time":"off"}">${esc(estadoPausa(d))}</span>`:''}
+        </div>
+        <div class="sub mono">${esc(d.ip||"")} · ${esc(d.mac||"?")}${d.vendor?(" · "+esc(d.vendor)):""}</div>
+      </div>
+      <button class="ghost sm" data-sched="${esc(d.mac)}" title="Horario de corte">${svgIco("clock")}</button>
+      <button class="sm ${d.paused?"ok":"danger"}" data-mac="${esc(d.mac)}" data-act="${d.paused?0:1}">
+        ${d.paused?"Reanudar":"Cortar"}
+      </button>
+    </div>`;
+}
+
+function render(){
+  const box = document.getElementById("groups");
+  const q = Q.trim().toLowerCase();
+  let list = ALL.filter(d => !q || [d.ip,d.mac,d.vendor,d.type,nombre(d)].join(" ").toLowerCase().includes(q));
+  if(ONLYOFF) list = list.filter(d => d.paused);
+  renderBulk();
+  if(!list.length){
+    box.innerHTML = '<div class="card"><div class="sub">'+
+      (ONLYOFF ? "No hay ningún equipo cortado ahora mismo." :
+       (q ? "Ningún equipo coincide con la búsqueda." : "Ningún equipo detectado.")) + '</div></div>';
+    return;
+  }
+  const grupos = {};
+  list.forEach(d=>{
+    const c = d.paused ? {k:"off", label:"Cortados ahora"} : cat(d);
+    (grupos[c.k] = grupos[c.k] || {label:c.label, items:[]}).items.push(d);
+  });
+  const orden = Object.keys(grupos).sort((a,b)=>{
+    const ia = a==="off" ? -1 : ORDER.indexOf(a), ib = b==="off" ? -1 : ORDER.indexOf(b);
+    return ia-ib;
+  });
+  box.innerHTML = orden.map(k=>{
+    const g = grupos[k];
+    g.items.sort((a,b)=>ipnum(a.ip)-ipnum(b.ip));
+    const ico = k==="off" ? "ban" : (g.items[0] ? devIco(g.items[0]) : "unknown");
+    return `<h2><span class="hico">${dobleIco(ico)}${g.label}</span><span class="n">${g.items.length}</span></h2>
+      <div class="card">${g.items.map(deviceRow).join("")}</div>`;
+  }).join("");
+  box.querySelectorAll("button[data-mac]").forEach(b=>b.addEventListener("click", ()=>onClick(b)));
+  box.querySelectorAll("button[data-sched]").forEach(b=>b.addEventListener("click", ()=>{
+    const d = ALL.find(x=>(x.mac||"").toLowerCase()===(b.dataset.sched||"").toLowerCase());
+    if(d) abrirHorario(d);
+  }));
+  box.querySelectorAll("[data-namemac]").forEach(el=>el.addEventListener("click", ()=>{
+    const d = ALL.find(x=>(x.mac||"").toLowerCase()===(el.dataset.namemac||"").toLowerCase());
+    if(d) abrirNombre(d);
+  }));
+}
+
+// ---- horarios («de tal a tal»)
+function renderWins(){
+  const box = document.getElementById("wins");
+  document.getElementById("nowt").textContent = NOW ? ("ahora " + NOW) : "";
+  if(!WINS.length){
+    box.innerHTML = '<div class="card"><div class="sub">Sin horarios programados. Toca el reloj de un equipo para ponerle una franja horaria.</div></div>';
+    return;
+  }
+  box.innerHTML = '<div class="card">' + WINS.map(w=>{
+    const act = NOW_ACTIVE.map(x=>String(x).toLowerCase()).includes(String(w.mac||"").toLowerCase());
+    return `<div class="wrow">
+      ${chipIco("clock")}
+      <div class="meta">
+        <div class="nm"><span class="t">${esc(nombreMac(w.mac))}</span>
+          <span class="pill ${act?"off":""}">${act?"activo ahora":"fuera de horario"}</span></div>
+        <div class="sub mono">${esc(w.start)} → ${esc(w.end)} · todos los días</div>
+      </div>
+      <button class="ghost sm" data-wdel="${esc(w.id)}">${svgIco("x")}</button>
+    </div>`;
+  }).join("") + '</div>';
+  box.querySelectorAll("button[data-wdel]").forEach(b=>b.addEventListener("click", ()=>{
+    const w = WINS.find(x=>x.id===b.dataset.wdel);
+    const estabaActivo = w && NOW_ACTIVE.map(x=>String(x).toLowerCase()).includes(String(w.mac||"").toLowerCase());
+    modal("Quitar el horario", "Se dejará de cortar «"+nombreMac(w?w.mac:"")+"» en esa franja"+(estabaActivo?" (ahora mismo está cortado por él: se le devolverá el internet)":"")+". ¿Seguro?",
+      [{label:"Quitar", cls:"danger", fn: async ()=>{
+        const r = await api(`/api/windows/${encodeURIComponent(b.dataset.wdel)}/delete`, {method:"POST"});
+        toast(r.ok ? "Horario eliminado" : ("No se pudo: "+(r.reason||r.error||"?")));
+        await loadAll(false);
+      }}]);
+  }));
+}
+
+function abrirHorario(d){
+  const mac = (d.mac||"").toLowerCase();
+  const mios = WINS.filter(w=>(w.mac||"").toLowerCase()===mac);
+  document.getElementById("stitle").textContent = "Horario para «"+nombre(d)+"»";
+  document.getElementById("stext").textContent = mios.length
+    ? ("Ahora tiene: " + mios.map(w=>w.start+" → "+w.end).join(", ") + ". Guardar añade otra franja.")
+    : "Sin horario todavía. Elige la franja y guarda.";
+  const sIn = document.getElementById("sstart"), eIn = document.getElementById("send");
+  if(mios.length){ sIn.value = mios[0].start; eIn.value = mios[0].end; }
+  const acts = document.getElementById("sacts"); acts.innerHTML = "";
+  const add = (label, cls, fn) => { const b=document.createElement("button"); b.className="sm "+cls; b.textContent=label;
+    b.addEventListener("click", ()=>{ ovlOff("smodal"); fn(); }); acts.appendChild(b); };
+  if(mios.length) add("Quitar todos", "ghost", async ()=>{
+    for(const w of mios) await api(`/api/windows/${encodeURIComponent(w.id)}/delete`, {method:"POST"});
+    toast("Horarios quitados"); await loadAll(false);
+  });
+  add("Cancelar", "ghost", ()=>{});
+  add("Guardar", "", async ()=>{
+    const r = await api("/api/windows", {method:"POST", body: JSON.stringify({mac: mac, start: sIn.value, end: eIn.value})});
+    if(!r.ok){ toast("No se pudo: "+(r.reason||r.error||"?")); return; }
+    toast(r.applied_now ? ("Horario guardado y ya aplicado ("+sIn.value+" → "+eIn.value+")")
+                        : ("Horario guardado ("+sIn.value+" → "+eIn.value+")"));
+    await loadAll(false);
+  });
+  ovlOn("smodal");
+}
+
+// ---- acciones masivas (protege el router, este equipo y los móviles)
+function esProtegido(d){ return d.is_self || cat(d).k==="net" || d.random_mac; }
+function renderBulk(){
+  const cortables = ALL.filter(d=>d.mac && !d.paused && !esProtegido(d));
+  const cortados  = ALL.filter(d=>d.paused);
+  const b = document.getElementById("bulk");
+  b.innerHTML =
+    (cortables.length ? `<button class="ghost sm" id="alloff">${svgIco("ban")}${cortables.length===1?"Cortar el restante":"Cortar los "+cortables.length+" restantes"}</button>` : "") +
+    (cortados.length  ? `<button class="ghost sm" id="allon">${svgIco("check")}${cortados.length===1?"Reanudar el cortado":"Reanudar los "+cortados.length+" cortados"}</button>` : "");
+  const off = document.getElementById("alloff");
+  if(off) off.addEventListener("click", ()=>modal(
+    "Cortar internet a "+(cortables.length===1?"1 equipo":cortables.length+" equipos"),
+    "No se toca el router, ni este equipo, ni los móviles/portátiles (así no te quedas sin la app ni sin teléfono). Puedes reanudarlos todos con un botón. ¿Seguro?",
+    [{label:"Cortar todos", cls:"danger", fn: async ()=>{
+      let ok=0, fail=0;
+      for(const d of cortables){ const r=await api(`/api/devices/${encodeURIComponent(d.mac)}/pause`, {method:"POST"}); r.ok?ok++:fail++; }
+      toast("Internet cortado a "+ok+" equipos"+(fail?(" · fallaron "+fail):""));
+      await loadAll(false);
+    }}]));
+  const on = document.getElementById("allon");
+  if(on) on.addEventListener("click", ()=>modal(
+    "Devolver internet a "+(cortados.length===1?"1 equipo":cortados.length+" equipos"),
+    "Se restaura el ARP de esos equipos: vuelven a navegar con normalidad. ¿Seguro?",
+    [{label:"Reanudar todos", cls:"ok", fn: async ()=>{
+      let ok=0;
+      for(const d of cortados){ const r=await api(`/api/devices/${encodeURIComponent(d.mac)}/resume`, {method:"POST"}); if(r.ok) ok++; }
+      toast("Internet devuelto a "+ok+" equipos");
+      await loadAll(false);
+    }}]));
+}
+
+function ovlOn(id){ document.getElementById(id).classList.add("on"); }
+function ovlOff(id){ document.getElementById(id).classList.remove("on"); }
+function modal(titulo, texto, acciones){
+  document.getElementById("mtitle").textContent = titulo;
+  document.getElementById("mtext").textContent = texto;
+  const acts = document.getElementById("macts"); acts.innerHTML="";
+  const add = (label, cls, fn) => { const b=document.createElement("button"); b.className="sm "+cls;
+    b.textContent=label; b.addEventListener("click", ()=>{ ovlOff("modal"); fn(); }); acts.appendChild(b); };
+  add("Cancelar", "ghost", ()=>{});
+  acciones.forEach(a=>add(a.label, a.cls, a.fn));
+  ovlOn("modal");
+}
+
+async function onClick(b){
+  const mac=b.dataset.mac, act=b.dataset.act==="1";
+  const d = ALL.find(x=>(x.mac||"").toLowerCase()===mac.toLowerCase()) || {mac:mac};
+  const hacer = async ()=>{
+    b.disabled=true; const txt=b.textContent; b.innerHTML='<span class="spin">◐</span>';
+    const res = await api(`/api/devices/${encodeURIComponent(mac)}/${act?"pause":"resume"}`, {method:"POST"});
+    if(!res.ok){ toast("No se pudo aplicar: "+(res.reason||res.error||"desconocido")); b.disabled=false; b.textContent=txt; return; }
+    toast(act ? ("Internet cortado a "+nombre(d)) : ("Internet devuelto a "+nombre(d)));
+    await loadAll(false);
+  };
+  if(act) modal("Cortar internet",
+      "Se le quitará internet a «"+nombre(d)+"» ("+(d.ip||"")+"). Su Wi-Fi sigue conectado y el resto de la casa no se toca.",
+      [{label:"Cortar", cls:"danger", fn: hacer}]);
+  else modal("Devolver internet",
+      "Se le devolverá internet a «"+nombre(d)+"» ahora mismo.",
+      [{label:"Reanudar", cls:"ok", fn: hacer}]);
+}
+
+// Auto-actualización: Telegram guarda la Mini App en caché. Si el PC sirve un HTML más
+// nuevo que el que está en pantalla, se recarga sola con un parámetro nuevo en la URL.
+function checkUiVersion(token){
+  token = String(token || "");
+  if(!token || token === "0" || token === UI_BUILD) return;
+  const tried = localStorage.getItem("netctl_ui_tried") || "";
+  if(tried === token){
+    toast("Hay una versión nueva de la app, pero Telegram la tiene en caché: ciérrala del todo (✕) y ábrela otra vez.");
+    return;
+  }
+  try{ localStorage.setItem("netctl_ui_tried", token); }catch(e){}
+  location.replace("/?v=" + encodeURIComponent(token));
+}
+
+async function loadStatus(refresh){
+  const s = await api("/api/status" + (refresh ? "?refresh=1" : ""));
+  if(!s.ok){ document.getElementById("banner").textContent = s.error||"error"; return; }
+  checkUiVersion(s.ui);
+  const n = s.network||{};
+  document.getElementById("netname").textContent = n.ssid || "Mi red";
+  document.getElementById("ssid").textContent = n.ssid || "(no disponible)";
+  document.getElementById("gw").textContent = n.gateway || "—";
+  document.getElementById("myip").textContent = n.my_ip || "—";
+  document.getElementById("wan").textContent = n.public_ip || "—";
+  document.getElementById("chipcnt").textContent = "Equipos: " + (s.devices_total ?? "—");
+  const off = s.devices_paused ?? 0;
+  const co = document.getElementById("chipoff");
+  co.textContent = "Cortados: " + (s.devices_paused ?? "—");
+  co.className = "chip" + (off ? " red" : " green");
+  document.getElementById("netdriver").textContent =
+      (s.driver||"") + " · bloqueo: " + (s.enforcement||"") + " · " + VERSION;
+  const b = document.getElementById("banner");
+  b.innerHTML = (s.enforcement==="none" ? svgIco("alert") : svgIco("shield"))
+     + esc(s.enforcement==="none" ? (s.enforcement_note||"Sin forma de cortar internet desde este equipo.")
+                                  : (s.enforcement_note||""));
+  b.className = s.enforcement==="none" ? "warn" : "";
+}
+
+let NOW_ACTIVE = [];
+async function loadWindows(){
+  const r = await api("/api/windows");
+  if(!r.ok) return;
+  WINS = r.windows || [];
+  NOW = r.now || "";
+  NOW_ACTIVE = r.active || [];
+  renderWins();
+}
+
+async function loadDevices(refresh){
+  const r = await api("/api/devices" + (refresh ? "?refresh=1" : ""));
+  if(!r.ok){ document.getElementById("groups").innerHTML = '<div class="card"><div class="sub">'+esc(r.error||"error")+'</div></div>'; return; }
+  ALL = r.devices||[];
+  document.getElementById("ts").textContent =
+      (r.last_scan ? new Date(r.last_scan*1000).toLocaleTimeString() : "—") + (r.scanning ? " · escaneando…" : "");
+  render();
+  if(r.scanning) setTimeout(()=>loadDevices(false), 3000);
+}
+
+async function loadAll(refresh){ await loadWindows(); await loadDevices(refresh); await loadStatus(refresh); }
+
+document.getElementById("q").addEventListener("input", e=>{ Q = e.target.value; render(); });
+function pintaSoloCortados(b){
+  b.className = "ghost sm" + (ONLYOFF ? " on" : "");
+  b.innerHTML = svgIco("ban") + (ONLYOFF ? "solo cortados" : "");
+}
+document.getElementById("onlyoff").addEventListener("click", ()=>{
+  ONLYOFF = !ONLYOFF; lsSet("netctl_onlyoff", ONLYOFF);
+  pintaSoloCortados(document.getElementById("onlyoff"));
+  render();
+});
+document.getElementById("refresh").addEventListener("click", ()=>loadAll(true));
+document.getElementById("refresh").innerHTML = svgIco("refresh");
+function pintaCabeceras(){
+  document.getElementById("h2red").innerHTML = '<span class="hico">' + dobleIco("wifi") + 'Red</span><span class="n" id="ts">—</span>';
+  document.getElementById("h2dev").innerHTML = '<span class="hico">' + dobleIco("grid") + 'Dispositivos</span>';
+  document.getElementById("h2win").innerHTML = '<span class="hico">' + dobleIco("clock") + 'Horarios</span><span class="n" id="nowt"></span>';
+}
+pintaCabeceras();
+pintaSoloCortados(document.getElementById("onlyoff"));
+
+// ---- MODO NOCTURNO / CLARO
+let DARK_MODE = lsGet("netctl_darkmode", null); // null = auto (Telegram), true = forzar oscuro, false = forzar claro
+
+function aplicarModoOscuro(){
+  const tg = tgSdk();
+  const auto = DARK_MODE === null;
+  const oscuro = auto ? (tg && tg.colorScheme === "dark") : DARK_MODE;
+  
+  document.body.classList.remove("light-mode", "dark-mode");
+  if(!auto) document.body.classList.add(oscuro ? "dark-mode" : "light-mode");
+  
+  const btn = document.getElementById("darkmode");
+  if(btn){
+    const ico = oscuro ? svgIco("sun") : svgIco("moon");
+    btn.innerHTML = ico;
+    btn.title = auto ? (oscuro ? "Modo automático (oscuro)" : "Modo automático (claro)") 
+                      : (oscuro ? "Cambiar a modo claro" : "Cambiar a modo oscuro");
+    btn.className = "ghost sm" + (auto ? "" : " on");
+  }
+}
+
+document.getElementById("darkmode").addEventListener("click", ()=>{
+  // Ciclo: auto → claro → oscuro → auto
+  if(DARK_MODE === null) DARK_MODE = false;       // auto → claro
+  else if(DARK_MODE === false) DARK_MODE = true;  // claro → oscuro
+  else DARK_MODE = null;                          // oscuro → auto
+  
+  lsSet("netctl_darkmode", DARK_MODE);
+  aplicarModoOscuro();
+  toast(DARK_MODE === null ? "Modo automático (Telegram)" : (DARK_MODE ? "Modo oscuro" : "Modo claro"));
+});
+
+aplicarModoOscuro(); // aplicar al cargar
+
+
+// ---- estilo de los iconos (A línea fina · B duotono · C chip de color)
+const ESTILOS = [["A", "Línea fina", "Trazo fino del color del texto"],
+                 ["B", "Duotono", "Trazo azul con halo suave"],
+                 ["C", "Chip de color", "Cuadro con degradado y glifo blanco"]];
+let STYLE = lsGet("netctl_style", "C");
+function setEstilo(e){
+  STYLE = ESTILOS.some(x=>x[0]===e) ? e : "C";
+  lsSet("netctl_style", STYLE);
+  document.body.className = "est" + STYLE;
+  const b = document.getElementById("style");
+  if(b) b.innerHTML = svgIco("palette");
+}
+function abrirEstilo(){
+  const box = document.getElementById("stlist");
+  box.innerHTML = ESTILOS.map(([k,nombre,desc])=>`
+    <div class="wrow" data-style="${k}">
+      <div class="est${k}">${chipIco("router")}</div>
+      <div class="meta">
+        <div class="nm"><span class="t">${k} · ${nombre}</span>${k===STYLE?'<span class="pill">activo</span>':''}</div>
+        <div class="sub">${desc}</div>
+      </div>
+      <button class="ghost sm">${k===STYLE?svgIco("check"):""}</button>
+    </div>`).join("");
+  box.querySelectorAll("[data-style]").forEach(el=>el.addEventListener("click", ()=>{
+    setEstilo(el.dataset.style); ovlOff("stmodal"); toast("Estilo " + el.dataset.style + " aplicado");
+  }));
+  ovlOn("stmodal");
+}
+setEstilo(STYLE);
+document.getElementById("style").addEventListener("click", abrirEstilo);
+document.getElementById("stclose").addEventListener("click", ()=>ovlOff("stmodal"));
+document.getElementById("ninput").addEventListener("keydown", e=>{ if(e.key==="Enter"){ const acts=document.getElementById("nacts");
+  const btn=acts.querySelector("button:last-child"); if(btn) btn.click(); }});
+loadAll(true);
+setInterval(()=>{ if(!document.hidden) loadAll(false); }, 15000);
+</script>
+
+
+</body></html>
