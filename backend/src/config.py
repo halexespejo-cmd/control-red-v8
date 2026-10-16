@@ -36,6 +36,9 @@ class Settings(BaseSettings):
     # Logging
     LOG_LEVEL: str = "INFO"
     
+    # Sentry (optional - error tracking)
+    SENTRY_DSN: str = ""
+    
     class Config:
         env_file = ".env"
         case_sensitive = True

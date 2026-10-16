@@ -1,6 +1,8 @@
 """
 FastAPI application - Control de Red Backend v9
 """
+import sentry_sdk
+from sentry_sdk.integrations.fastapi import FastApiIntegration
 from fastapi import FastAPI, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -9,20 +11,34 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
-import logging
 
 from src.config import get_settings
 from src.models.database import init_db, get_db
 from src.api.devices import router as devices_router
+from src.utils.logging import configure_logging, get_logger
+from prometheus_fastapi_instrumentator import Instrumentator
 
-# Configurar logging
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+# Configure structured logging
+settings_pre = get_settings()
+configure_logging(
+    log_level=settings_pre.LOG_LEVEL,
+    json_logs=not settings_pre.DEBUG  # JSON in production, console in dev
 )
-logger = logging.getLogger(__name__)
+
+logger = get_logger(__name__)
 
 settings = get_settings()
+
+# Initialize Sentry (optional, configure with SENTRY_DSN env var)
+if hasattr(settings, 'SENTRY_DSN') and settings.SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=settings.SENTRY_DSN,
+        integrations=[FastApiIntegration()],
+        traces_sample_rate=0.1,  # 10% performance monitoring
+        environment=settings.APP_NAME,
+        release=settings.VERSION,
+    )
+    logger.info("✅ Sentry initialized")
 
 # Rate limiter
 limiter = Limiter(key_func=get_remote_address)
@@ -97,6 +113,9 @@ app.add_middleware(
 
 # Registrar routers
 app.include_router(devices_router)
+
+# Prometheus metrics
+Instrumentator().instrument(app).expose(app)
 
 
 @app.get("/", tags=["Health"])

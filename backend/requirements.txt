@@ -7,6 +7,11 @@ python-multipart==0.0.6
 websockets==12.0
 slowapi==0.1.9
 
+# Observability
+sentry-sdk[fastapi]==2.0.0
+structlog==24.1.0
+prometheus-fastapi-instrumentator==7.0.0
+
 # Network
 scapy==2.5.0
 python-nmap==0.7.1
