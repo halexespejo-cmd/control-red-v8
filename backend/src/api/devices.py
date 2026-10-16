@@ -17,6 +17,7 @@ from src.models.device import (
     DeviceUpdate
 )
 from src.services.scanner import NetworkScanner
+from src.services.arp_blocker import get_arp_blocker
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/devices", tags=["Devices"])
@@ -155,7 +156,7 @@ async def block_device(
     db: AsyncSession = Depends(get_db)
 ):
     """
-    Bloquea un dispositivo (marca como bloqueado)
+    Bloquea un dispositivo vía ARP spoofing
     
     Args:
         mac: MAC address
@@ -181,20 +182,52 @@ async def block_device(
                 detail="Cannot block self or router"
             )
         
+        if device.is_blocked:
+            return {
+                "ok": True,
+                "mac": mac,
+                "is_blocked": True,
+                "message": "Device already blocked"
+            }
+        
+        # Marcar en DB
         device.is_blocked = True
         device.blocked_at = datetime.utcnow()
-        
         await db.commit()
         
-        # TODO: Aquí iría la lógica real de ARP spoofing (Sesión 3)
-        logger.info(f"Device {mac} marked as blocked (ARP enforcement pending)")
+        # ARP spoofing real
+        blocker = get_arp_blocker()
         
-        return {
-            "ok": True,
-            "mac": mac,
-            "is_blocked": True,
-            "message": "Device marked as blocked (enforcement will be added in Session 3)"
-        }
+        if blocker.is_initialized:
+            success = await blocker.block_device(device.ip, device.mac)
+            
+            if success:
+                logger.info(f"Device {mac} blocked via ARP spoofing")
+                return {
+                    "ok": True,
+                    "mac": mac,
+                    "is_blocked": True,
+                    "enforcement": "arp_active",
+                    "message": "Device blocked successfully"
+                }
+            else:
+                logger.error(f"ARP blocking failed for {mac}")
+                return {
+                    "ok": False,
+                    "mac": mac,
+                    "is_blocked": True,
+                    "enforcement": "db_only",
+                    "message": "Marked as blocked in DB, but ARP enforcement failed"
+                }
+        else:
+            logger.warning("ARPBlocker not initialized, DB-only block")
+            return {
+                "ok": True,
+                "mac": mac,
+                "is_blocked": True,
+                "enforcement": "db_only",
+                "message": "Device marked as blocked (ARP blocker not initialized - run with sudo)"
+            }
     
     except HTTPException:
         raise
@@ -229,6 +262,12 @@ async def unblock_device(
         if not device:
             raise HTTPException(status_code=404, detail="Device not found")
         
+        # Detener ARP spoofing
+        blocker = get_arp_blocker()
+        if blocker.is_initialized and device.is_blocked:
+            await blocker.unblock_device(device.mac)
+        
+        # Actualizar DB
         device.is_blocked = False
         device.blocked_at = None
         
@@ -240,7 +279,7 @@ async def unblock_device(
             "ok": True,
             "mac": mac,
             "is_blocked": False,
-            "message": "Device unblocked"
+            "message": "Device unblocked successfully"
         }
     
     except HTTPException:
@@ -300,4 +339,35 @@ async def get_network_info():
     
     except Exception as e:
         logger.error(f"Error getting network info: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/blocked/active")
+async def get_active_blocks():
+    """
+    Lista de dispositivos con bloqueo ARP activo
+    
+    Returns:
+        Dispositivos con ARP spoofing activo
+    """
+    try:
+        blocker = get_arp_blocker()
+        
+        if not blocker.is_initialized:
+            return {
+                "ok": False,
+                "message": "ARP Blocker not initialized",
+                "active_blocks": {}
+            }
+        
+        active_blocks = blocker.get_blocked_devices()
+        
+        return {
+            "ok": True,
+            "count": len(active_blocks),
+            "active_blocks": active_blocks
+        }
+    
+    except Exception as e:
+        logger.error(f"Error getting active blocks: {e}")
         raise HTTPException(status_code=500, detail=str(e))

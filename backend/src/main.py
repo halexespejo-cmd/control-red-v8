@@ -33,10 +33,39 @@ async def lifespan(app: FastAPI):
     await init_db()
     logger.info("✅ Database initialized")
     
+    # Inicializar ARP Blocker
+    from src.services.arp_blocker import get_arp_blocker
+    from src.services.scanner import NetworkScanner
+    
+    try:
+        scanner = NetworkScanner()
+        net_info = await scanner.get_network_info()
+        
+        if net_info.get('gateway'):
+            blocker = get_arp_blocker()
+            await blocker.initialize(
+                gateway_ip=net_info['gateway']
+            )
+            logger.info("✅ ARP Blocker initialized (requires sudo for real blocking)")
+        else:
+            logger.warning("⚠️  No gateway detected, ARP Blocker not initialized")
+    except Exception as e:
+        logger.warning(f"⚠️  ARP Blocker initialization failed: {e} (run with sudo for real blocking)")
+    
     yield
     
     # Shutdown
     logger.info("🛑 Shutting down %s", settings.APP_NAME)
+    
+    # Detener todos los bloqueos
+    try:
+        from src.services.arp_blocker import get_arp_blocker
+        blocker = get_arp_blocker()
+        if blocker.is_initialized:
+            await blocker.stop_all()
+            logger.info("✅ All ARP blocks stopped")
+    except Exception as e:
+        logger.error(f"Error stopping ARP blocks: {e}")
 
 
 # Crear aplicación FastAPI
@@ -102,11 +131,30 @@ async def get_status(db: AsyncSession = Depends(get_db)):
         scanner = NetworkScanner()
         net_info = await scanner.get_network_info()
         
+        # Estado del blocker
+        from src.services.arp_blocker import get_arp_blocker
+        blocker = get_arp_blocker()
+        
+        enforcement = "none"
+        enforcement_note = "Scanner activo"
+        
+        if blocker.is_initialized:
+            active_blocks = blocker.get_blocked_devices()
+            if len(active_blocks) > 0:
+                enforcement = "arp_active"
+                enforcement_note = f"ARP spoofing active: {len(active_blocks)} device(s) blocked"
+            else:
+                enforcement = "ready"
+                enforcement_note = "ARP Blocker ready (no active blocks)"
+        else:
+            enforcement = "simulate"
+            enforcement_note = "ARP Blocker not initialized (run with sudo for real blocking)"
+        
         return {
             "ok": True,
             "driver": "host_lan",
-            "enforcement": "simulate",
-            "enforcement_note": "Scanner activo - ARP blocker pending (Sesión 3)",
+            "enforcement": enforcement,
+            "enforcement_note": enforcement_note,
             "network": {
                 "ssid": net_info.get('ssid'),
                 "gateway": net_info.get('gateway'),
