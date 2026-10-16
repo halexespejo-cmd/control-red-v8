@@ -1,11 +1,14 @@
 """
 FastAPI application - Control de Red Backend v9
 """
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 from sqlalchemy.ext.asyncio import AsyncSession
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
 import logging
 
 from src.config import get_settings
@@ -20,6 +23,9 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 settings = get_settings()
+
+# Rate limiter
+limiter = Limiter(key_func=get_remote_address)
 
 
 @asynccontextmanager
@@ -76,6 +82,10 @@ app = FastAPI(
     lifespan=lifespan
 )
 
+# Rate limiter state
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+
 # Configurar CORS
 app.add_middleware(
     CORSMiddleware,
@@ -90,7 +100,8 @@ app.include_router(devices_router)
 
 
 @app.get("/", tags=["Health"])
-async def root():
+@limiter.limit("100/minute")
+async def root(request: Request):
     """
     Health check endpoint
     
@@ -106,7 +117,8 @@ async def root():
 
 
 @app.get("/api/status", tags=["Status"])
-async def get_status(db: AsyncSession = Depends(get_db)):
+@limiter.limit("50/minute")
+async def get_status(request: Request, db: AsyncSession = Depends(get_db)):
     """
     Estado general del sistema
     

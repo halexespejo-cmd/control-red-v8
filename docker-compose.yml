@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: control-red-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=True
+      - DATABASE_URL=sqlite+aiosqlite:///./data/control_red.db
+      - NETWORK_INTERFACE=eth0
+      - SCAN_INTERVAL=15
+      - ARP_INTERVAL=2
+    volumes:
+      - ./backend/src:/app/src
+      - backend-data:/app/data
+    networks:
+      - control-red-network
+    restart: unless-stopped
+    # Requires --cap-add=NET_ADMIN for ARP spoofing
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Redis for caching (optional, for future use)
+  redis:
+    image: redis:7-alpine
+    container_name: control-red-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - control-red-network
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+
+volumes:
+  backend-data:
+    driver: local
+  redis-data:
+    driver: local
+
+networks:
+  control-red-network:
+    driver: bridge
