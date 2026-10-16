@@ -91,7 +91,7 @@ class ARPBlocker:
         except Exception as e:
             logger.error(f"Failed to initialize ARPBlocker: {e}")
             self.is_initialized = False
-            raise
+            # No raise, permite continuar sin blocker
     
     async def _get_mac(self, ip: str) -> Optional[str]:
         """
