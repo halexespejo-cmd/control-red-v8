@@ -5,6 +5,8 @@ import sentry_sdk
 from sentry_sdk.integrations.fastapi import FastApiIntegration
 from fastapi import FastAPI, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
+from src.middleware.cache_control import CacheControlMiddleware
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -127,6 +129,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Add GZip compression (responses > 1KB)
+app.add_middleware(GZipMiddleware, minimum_size=1000)
+
+# Add Cache-Control headers
+app.add_middleware(CacheControlMiddleware)
 
 # Registrar routers
 app.include_router(devices_router)

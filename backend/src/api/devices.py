@@ -6,9 +6,10 @@ import logging
 from typing import List
 from datetime import datetime
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query, Request
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func
+from sqlalchemy import select
+from sqlalchemy.orm import selectinload, func
 
 from src.models.database import get_db, Device
 from src.models.device import (
@@ -19,6 +20,7 @@ from src.models.device import (
 from src.services.scanner import NetworkScanner
 from src.services.arp_blocker import get_arp_blocker
 from src.utils.cache import get_cache, set_cache, delete_pattern
+from src.utils.cache_decorator import cache_endpoint
 from src.utils.websocket import broadcast_device_event, broadcast_scan_event
 
 logger = logging.getLogger(__name__)
@@ -34,7 +36,9 @@ except ImportError:
 
 
 @router.get("/", response_model=DevicesListResponse)
+@cache_endpoint(ttl=60, key_prefix="devices_list")
 async def get_devices(
+    request: Request,
     blocked_only: bool = Query(False, description="Solo dispositivos bloqueados"),
     category: str = Query(None, description="Filtrar por categoría"),
     db: AsyncSession = Depends(get_db)
