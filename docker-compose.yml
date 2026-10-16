@@ -14,6 +14,7 @@ services:
       - NETWORK_INTERFACE=eth0
       - SCAN_INTERVAL=15
       - ARP_INTERVAL=2
+      - REDIS_URL=redis://redis:6379/0
     volumes:
       - ./backend/src:/app/src
       - backend-data:/app/data
@@ -31,7 +32,7 @@ services:
       retries: 3
       start_period: 10s
 
-  # Redis for caching (optional, for future use)
+  # Redis for caching
   redis:
     image: redis:7-alpine
     container_name: control-red-redis
@@ -44,11 +45,35 @@ services:
     restart: unless-stopped
     command: redis-server --appendonly yes
 
+  # PostgreSQL (optional - for production)
+  # Uncomment to use PostgreSQL instead of SQLite
+  # postgres:
+  #   image: postgres:16-alpine
+  #   container_name: control-red-postgres
+  #   ports:
+  #     - "5432:5432"
+  #   environment:
+  #     - POSTGRES_USER=control_red
+  #     - POSTGRES_PASSWORD=your_secure_password
+  #     - POSTGRES_DB=control_red
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+  #   networks:
+  #     - control-red-network
+  #   restart: unless-stopped
+  #   healthcheck:
+  #     test: ["CMD-SHELL", "pg_isready -U control_red"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 3
+
 volumes:
   backend-data:
     driver: local
   redis-data:
     driver: local
+  # postgres-data:
+  #   driver: local
 
 networks:
   control-red-network:

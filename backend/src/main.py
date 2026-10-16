@@ -16,6 +16,7 @@ from src.config import get_settings
 from src.models.database import init_db, get_db
 from src.api.devices import router as devices_router
 from src.utils.logging import configure_logging, get_logger
+from src.utils.cache import get_redis, close_redis
 from prometheus_fastapi_instrumentator import Instrumentator
 
 # Configure structured logging
@@ -55,6 +56,13 @@ async def lifespan(app: FastAPI):
     await init_db()
     logger.info("✅ Database initialized")
     
+    # Initialize Redis
+    redis_client = await get_redis()
+    if redis_client:
+        logger.info("✅ Redis cache initialized")
+    else:
+        logger.warning("⚠️  Redis unavailable - cache disabled")
+    
     # Inicializar ARP Blocker
     from src.services.arp_blocker import get_arp_blocker
     from src.services.scanner import NetworkScanner
@@ -87,7 +95,11 @@ async def lifespan(app: FastAPI):
             await blocker.stop_all()
             logger.info("✅ All ARP blocks stopped")
     except Exception as e:
-        logger.error(f"Error stopping ARP blocks: {e}")
+        logger.warning(f"⚠️  Error stopping ARP blocks: {e}")
+    
+    # Close Redis
+    await close_redis()
+    logger.info("✅ Redis connection closed")
 
 
 # Crear aplicación FastAPI

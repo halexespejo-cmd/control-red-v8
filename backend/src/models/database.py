@@ -119,7 +119,10 @@ class NetworkScan(Base):
 engine = create_async_engine(
     settings.DATABASE_URL,
     echo=settings.DEBUG,
-    future=True
+    future=True,
+    pool_size=settings.DATABASE_POOL_SIZE if 'postgresql' in settings.DATABASE_URL else 5,
+    max_overflow=settings.DATABASE_MAX_OVERFLOW if 'postgresql' in settings.DATABASE_URL else 10,
+    pool_pre_ping=True,  # Verify connections before use
 )
 
 # Session factory

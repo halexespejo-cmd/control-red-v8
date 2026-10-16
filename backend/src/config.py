@@ -21,6 +21,9 @@ class Settings(BaseSettings):
     
     # Database
     DATABASE_URL: str = "sqlite+aiosqlite:///./control_red.db"
+    # For PostgreSQL use: "postgresql+asyncpg://user:pass@localhost/dbname"
+    DATABASE_POOL_SIZE: int = 10
+    DATABASE_MAX_OVERFLOW: int = 20
     
     # Security
     ALLOWED_ORIGINS: List[str] = [
@@ -38,6 +41,9 @@ class Settings(BaseSettings):
     
     # Sentry (optional - error tracking)
     SENTRY_DSN: str = ""
+    
+    # Redis (cache)
+    REDIS_URL: str = "redis://localhost:6379/0"
     
     class Config:
         env_file = ".env"

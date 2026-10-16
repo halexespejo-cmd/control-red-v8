@@ -18,6 +18,7 @@ from src.models.device import (
 )
 from src.services.scanner import NetworkScanner
 from src.services.arp_blocker import get_arp_blocker
+from src.utils.cache import get_cache, set_cache, delete_pattern
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/devices", tags=["Devices"])
@@ -41,6 +42,12 @@ async def get_devices(
         Lista de dispositivos
     """
     try:
+        # Try cache first
+        cache_key = f"devices:list:blocked={blocked_only}:category={category}"
+        cached = await get_cache(cache_key)
+        if cached:
+            return cached
+        
         # Construir query
         query = select(Device)
         
@@ -57,11 +64,16 @@ async def get_devices(
         # Contar bloqueados
         blocked_count = sum(1 for d in devices if d.is_blocked)
         
-        return DevicesListResponse(
+        response = DevicesListResponse(
             devices=[DeviceResponse.model_validate(d) for d in devices],
             total=len(devices),
             blocked_count=blocked_count
         )
+        
+        # Cache for 30 seconds
+        await set_cache(cache_key, response.model_dump(), ttl=30)
+        
+        return response
     
     except Exception as e:
         logger.error(f"Error getting devices: {e}")
@@ -140,6 +152,9 @@ async def update_device(
         
         await db.commit()
         await db.refresh(device)
+        
+        # Invalidate cache
+        await delete_pattern("devices:*")
         
         return DeviceResponse.model_validate(device)
     

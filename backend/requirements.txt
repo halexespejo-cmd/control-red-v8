@@ -22,6 +22,11 @@ greenlet==3.0.3
 sqlalchemy==2.0.23
 alembic==1.12.1
 aiosqlite==0.19.0
+asyncpg==0.29.0
+psycopg2-binary==2.9.9
+
+# Cache
+redis[hiredis]==5.0.1
 
 # Validation
 pydantic==2.5.0
