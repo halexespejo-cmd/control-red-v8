@@ -23,6 +23,14 @@ from src.utils.cache import get_cache, set_cache, delete_pattern
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/devices", tags=["Devices"])
 
+# Celery task import (optional - graceful degradation if Celery not available)
+try:
+    from src.tasks.network import scan_network_task
+    CELERY_AVAILABLE = True
+except ImportError:
+    CELERY_AVAILABLE = False
+    logger.warning("Celery not available - background tasks disabled")
+
 
 @router.get("/", response_model=DevicesListResponse)
 async def get_devices(

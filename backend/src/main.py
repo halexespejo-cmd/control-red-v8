@@ -15,6 +15,8 @@ from slowapi.errors import RateLimitExceeded
 from src.config import get_settings
 from src.models.database import init_db, get_db
 from src.api.devices import router as devices_router
+from src.api.auth import router as auth_router
+from src.api.tasks import router as tasks_router
 from src.utils.logging import configure_logging, get_logger
 from src.utils.cache import get_redis, close_redis
 from prometheus_fastapi_instrumentator import Instrumentator
@@ -124,7 +126,9 @@ app.add_middleware(
 )
 
 # Registrar routers
+app.include_router(auth_router)
 app.include_router(devices_router)
+app.include_router(tasks_router)
 
 # Prometheus metrics
 Instrumentator().instrument(app).expose(app)

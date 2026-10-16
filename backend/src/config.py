@@ -45,6 +45,15 @@ class Settings(BaseSettings):
     # Redis (cache)
     REDIS_URL: str = "redis://localhost:6379/0"
     
+    # JWT Authentication
+    SECRET_KEY: str = "your-secret-key-change-in-production-min-32-chars"
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
+    
+    # Celery (background tasks)
+    CELERY_BROKER_URL: str = "redis://localhost:6379/1"
+    CELERY_RESULT_BACKEND: str = "redis://localhost:6379/2"
+    
     class Config:
         env_file = ".env"
         case_sensitive = True

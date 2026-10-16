@@ -1,5 +1,10 @@
 # Backend Control de Red v9 - Requirements
 
+# Authentication
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-multipart==0.0.6
+
 # Web Framework
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
@@ -27,6 +32,10 @@ psycopg2-binary==2.9.9
 
 # Cache
 redis[hiredis]==5.0.1
+
+# Background Tasks
+celery[redis]==5.3.4
+flower==2.0.1
 
 # Validation
 pydantic==2.5.0

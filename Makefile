@@ -25,6 +25,15 @@ run: ## Run backend server
 run-dev: ## Run backend with reload
 	cd backend && . venv/bin/activate && uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
 
+celery-worker: ## Run Celery worker
+	cd backend && . venv/bin/activate && celery -A src.celery_app worker --loglevel=info
+
+celery-beat: ## Run Celery beat (periodic tasks)
+	cd backend && . venv/bin/activate && celery -A src.celery_app beat --loglevel=info
+
+celery-flower: ## Run Flower (Celery monitoring UI)
+	cd backend && . venv/bin/activate && celery -A src.celery_app flower --port=5555
+
 format: ## Format code with black and isort
 	cd backend && . venv/bin/activate && black src/
 	cd backend && . venv/bin/activate && isort --profile black src/
