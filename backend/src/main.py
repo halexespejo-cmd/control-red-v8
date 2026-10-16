@@ -22,6 +22,7 @@ from src.api.devices import router as devices_router
 from src.api.auth import router as auth_router
 from src.api.tasks import router as tasks_router
 from src.api.websocket import router as websocket_router
+from src.api.telegram import router as telegram_router
 from src.utils.logging import configure_logging, get_logger
 from src.utils.cache import get_redis, close_redis
 from prometheus_fastapi_instrumentator import Instrumentator
@@ -141,6 +142,7 @@ app.include_router(devices_router)
 app.include_router(auth_router)
 app.include_router(tasks_router)
 app.include_router(websocket_router)
+app.include_router(telegram_router)
 
 # Prometheus metrics
 Instrumentator().instrument(app).expose(app)

@@ -1,0 +1,35 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "backend/Dockerfile"
+
+[deploy]
+startCommand = "cd backend && uvicorn src.main:app --host 0.0.0.0 --port $PORT"
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+healthcheckPath = "/"
+healthcheckTimeout = 100
+
+[env]
+# Railway auto-injects: DATABASE_URL, REDIS_URL, PORT
+
+# App config
+APP_NAME = "control-red"
+DEBUG = "false"
+LOG_LEVEL = "INFO"
+VERSION = "9.0.0-dev.13"
+
+# Security (user must set these)
+SECRET_KEY = { generate = true }
+JWT_SECRET_KEY = { generate = true }
+
+# Optional: Sentry monitoring
+# SENTRY_DSN = ""
+
+[services]
+[services.postgres]
+  name = "postgres"
+  plan = "starter"
+  
+[services.redis]
+  name = "redis"
+  plan = "starter"

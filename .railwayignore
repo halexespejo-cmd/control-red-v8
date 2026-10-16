@@ -1,0 +1,46 @@
+# Railway ignore file - what NOT to upload
+
+# Git
+.git/
+.github/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Testing
+.pytest_cache/
+htmlcov/
+.coverage
+*.cover
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Docs (no necesarios en runtime)
+docs/
+*.md
+!README.md
+
+# Local dev
+.env.local
+.env.development
+*.sqlite
+*.db
+
+# Frontend (se sirve separado)
+frontend/
+
+# Backups
+backups/
+*.backup
+*.bak

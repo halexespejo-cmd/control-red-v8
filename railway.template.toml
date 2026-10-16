@@ -1,0 +1,69 @@
+# Railway Template Configuration
+# Docs: https://docs.railway.app/develop/services
+
+name = "Control de Red v9"
+description = "🌐 WiFi network control via Telegram Mini App. Self-hosted Fing alternative with ARP blocking, device management, and real-time monitoring."
+repository = "https://github.com/halexespejo-cmd/control-red-v9-dev"
+icon = "🌐"
+category = "network"
+tags = ["telegram", "networking", "wifi", "security", "monitoring"]
+
+# Main backend service
+[[services]]
+name = "backend"
+source = "."
+watch = ["backend/"]
+
+[services.build]
+builder = "DOCKERFILE"
+dockerfilePath = "backend/Dockerfile"
+
+[services.deploy]
+startCommand = "uvicorn src.main:app --host 0.0.0.0 --port $PORT"
+healthcheckPath = "/"
+healthcheckTimeout = 100
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+
+# Environment variables with Railway placeholders
+[services.env]
+APP_NAME = "control-red"
+DEBUG = "false"
+LOG_LEVEL = "INFO"
+VERSION = "9.0.0-dev.13"
+
+# Railway will inject these automatically from connected services
+DATABASE_URL = { serviceRef = "postgres", property = "databaseUrl" }
+REDIS_URL = { serviceRef = "redis", property = "connectionUrl" }
+
+# Generate secure random secrets
+SECRET_KEY = { generate = { type = "secret" } }
+JWT_SECRET_KEY = { generate = { type = "secret" } }
+
+# Optional: User can add later
+# SENTRY_DSN = ""
+
+# PostgreSQL database
+[[services]]
+name = "postgres"
+type = "database"
+engine = "postgresql"
+plan = "starter"  # Free tier compatible
+
+[services.env]
+# Railway auto-configures these
+POSTGRES_DB = "control_red"
+POSTGRES_USER = "control_red_user"
+
+# Redis cache
+[[services]]
+name = "redis"
+type = "database"
+engine = "redis"
+plan = "starter"  # Free tier compatible
+
+# Optional: Persistent volume for device data backups
+[[volumes]]
+name = "device-data"
+mountPath = "/data"
+serviceRef = "backend"
