@@ -19,6 +19,7 @@ from src.models.device import (
 from src.services.scanner import NetworkScanner
 from src.services.arp_blocker import get_arp_blocker
 from src.utils.cache import get_cache, set_cache, delete_pattern
+from src.utils.websocket import broadcast_device_event, broadcast_scan_event
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/devices", tags=["Devices"])
@@ -326,8 +327,17 @@ async def trigger_scan(
         Resultado del escaneo
     """
     try:
+        # Broadcast scan start
+        await broadcast_scan_event("scan_started", {"message": "Network scan initiated"})
+        
         scanner = NetworkScanner()
         result = await scanner.full_scan(db)
+        
+        # Broadcast scan complete
+        await broadcast_scan_event("scan_completed", {
+            "devices_found": result.get('devices_found', 0),
+            "scan_id": result.get('scan_id')
+        })
         
         return {
             "ok": True,
@@ -340,6 +350,7 @@ async def trigger_scan(
     
     except Exception as e:
         logger.error(f"Error during scan: {e}")
+        await broadcast_scan_event("scan_failed", {"error": str(e)})
         raise HTTPException(status_code=500, detail=str(e))
 
 

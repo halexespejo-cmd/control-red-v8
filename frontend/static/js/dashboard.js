@@ -34,7 +34,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Load initial data
     await refreshDashboard();
 
-    // Auto-refresh every 30 seconds
+    // Initialize WebSocket for real-time updates
+    initWebSocket();
+
+    // Auto-refresh every 30 seconds (fallback si WebSocket falla)
     refreshInterval = setInterval(refreshDashboard, 30000);
 });
 
