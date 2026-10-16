@@ -46,6 +46,13 @@ class DeviceResponse(DeviceBase):
         from_attributes = True
 
 
+class DeviceUpdate(BaseModel):
+    """Schema para actualizar dispositivo (campos opcionales)"""
+    custom_name: Optional[str] = Field(None, max_length=50)
+    category: Optional[str] = None
+    device_type: Optional[str] = None
+
+
 class DeviceListResponse(BaseModel):
     """Respuesta de lista de dispositivos"""
     ok: bool = True
@@ -53,6 +60,13 @@ class DeviceListResponse(BaseModel):
     total: int
     last_scan: Optional[datetime] = None
     scanning: bool = False
+
+
+class DevicesListResponse(BaseModel):
+    """Respuesta de lista de dispositivos (alias para API)"""
+    devices: List[DeviceResponse]
+    total: int
+    blocked_count: int
 
 
 class ScheduleBase(BaseModel):

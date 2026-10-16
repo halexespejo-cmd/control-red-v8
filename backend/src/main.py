@@ -1,14 +1,16 @@
 """
 FastAPI application - Control de Red Backend v9
 """
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
+from sqlalchemy.ext.asyncio import AsyncSession
 import logging
 
 from src.config import get_settings
-from src.models.database import init_db
+from src.models.database import init_db, get_db
+from src.api.devices import router as devices_router
 
 # Configurar logging
 logging.basicConfig(
@@ -54,6 +56,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Registrar routers
+app.include_router(devices_router)
+
 
 @app.get("/", tags=["Health"])
 async def root():
@@ -72,28 +77,55 @@ async def root():
 
 
 @app.get("/api/status", tags=["Status"])
-async def get_status():
+async def get_status(db: AsyncSession = Depends(get_db)):
     """
     Estado general del sistema
     
     Returns:
         dict: Estado actual del backend
     """
-    return {
-        "ok": True,
-        "driver": "host_lan",
-        "enforcement": "simulate",  # Placeholder - se cambiará cuando blocker esté listo
-        "enforcement_note": "Backend inicializado - scanner y blocker pendientes",
-        "network": {
-            "ssid": None,
-            "gateway": None,
-            "my_ip": None,
-            "public_ip": None
-        },
-        "devices_total": 0,
-        "devices_paused": 0,
-        "ui": settings.VERSION
-    }
+    from sqlalchemy import select, func
+    from src.models.database import Device
+    from src.services.scanner import NetworkScanner
+    
+    try:
+        # Contar dispositivos
+        result = await db.execute(select(func.count(Device.id)))
+        total_devices = result.scalar_one()
+        
+        result = await db.execute(
+            select(func.count(Device.id)).where(Device.is_blocked == True)
+        )
+        blocked_devices = result.scalar_one()
+        
+        # Info de red
+        scanner = NetworkScanner()
+        net_info = await scanner.get_network_info()
+        
+        return {
+            "ok": True,
+            "driver": "host_lan",
+            "enforcement": "simulate",
+            "enforcement_note": "Scanner activo - ARP blocker pending (Sesión 3)",
+            "network": {
+                "ssid": net_info.get('ssid'),
+                "gateway": net_info.get('gateway'),
+                "my_ip": net_info.get('my_ip'),
+                "public_ip": net_info.get('public_ip')
+            },
+            "devices_total": total_devices,
+            "devices_paused": blocked_devices,
+            "ui": settings.VERSION
+        }
+    
+    except Exception as e:
+        logger.error(f"Error in status endpoint: {e}")
+        return {
+            "ok": False,
+            "error": str(e),
+            "driver": "host_lan",
+            "enforcement": "error"
+        }
 
 
 @app.exception_handler(Exception)
