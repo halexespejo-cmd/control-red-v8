@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control de Red - Admin Dashboard</title>
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="logo">
+            <i class="fas fa-network-wired"></i>
+            <span>Control de Red</span>
+        </div>
+        
+        <nav class="nav-menu">
+            <a href="#dashboard" class="nav-item active" data-page="dashboard">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a href="#devices" class="nav-item" data-page="devices">
+                <i class="fas fa-laptop"></i>
+                <span>Dispositivos</span>
+            </a>
+            <a href="#network" class="nav-item" data-page="network">
+                <i class="fas fa-wifi"></i>
+                <span>Red</span>
+            </a>
+            <a href="#users" class="nav-item" data-page="users">
+                <i class="fas fa-users"></i>
+                <span>Usuarios</span>
+            </a>
+            <a href="#settings" class="nav-item" data-page="settings">
+                <i class="fas fa-cog"></i>
+                <span>Configuración</span>
+            </a>
+        </nav>
+        
+        <div class="user-profile">
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <div class="user-info">
+                <div class="user-name" id="userName">Admin</div>
+                <button class="btn-logout" id="btnLogout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Salir
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Header -->
+        <header class="header">
+            <button class="btn-toggle" id="btnToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="header-title">
+                <h1 id="pageTitle">Dashboard</h1>
+            </div>
+            
+            <div class="header-actions">
+                <button class="btn-theme" id="btnTheme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                
+                <button class="btn-scan" id="btnScan">
+                    <i class="fas fa-sync-alt"></i>
+                    Escanear
+                </button>
+            </div>
+        </header>
+
+        <!-- Dashboard Page -->
+        <div class="page active" id="page-dashboard">
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon primary">
+                        <i class="fas fa-laptop"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Total Dispositivos</div>
+                        <div class="stat-value" id="statTotal">0</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon success">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Activos</div>
+                        <div class="stat-value" id="statActive">0</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon danger">
+                        <i class="fas fa-ban"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Bloqueados</div>
+                        <div class="stat-value" id="statBlocked">0</div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon warning">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-label">Red</div>
+                        <div class="stat-value" id="statNetwork">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="charts-row">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Dispositivos por Categoría</h3>
+                    </div>
+                    <canvas id="chartCategory"></canvas>
+                </div>
+                
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Actividad de Red</h3>
+                    </div>
+                    <canvas id="chartActivity"></canvas>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="activity-card">
+                <div class="activity-header">
+                    <h3>Actividad Reciente</h3>
+                </div>
+                <div class="activity-list" id="activityList">
+                    <!-- Activity items will be inserted here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Devices Page -->
+        <div class="page" id="page-devices">
+            <div class="devices-header">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchDevices" placeholder="Buscar dispositivos...">
+                </div>
+                
+                <div class="filters">
+                    <select id="filterCategory">
+                        <option value="">Todas las categorías</option>
+                        <option value="router">Router</option>
+                        <option value="laptop">Laptop</option>
+                        <option value="phone">Phone</option>
+                        <option value="tv">TV</option>
+                        <option value="iot">IoT</option>
+                    </select>
+                    
+                    <select id="filterStatus">
+                        <option value="">Todos</option>
+                        <option value="active">Activos</option>
+                        <option value="blocked">Bloqueados</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="devices-table">
+                <table id="devicesTable">
+                    <thead>
+                        <tr>
+                            <th>Dispositivo</th>
+                            <th>IP</th>
+                            <th>MAC</th>
+                            <th>Categoría</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="devicesTableBody">
+                        <!-- Rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Network Page -->
+        <div class="page" id="page-network">
+            <div class="network-info">
+                <div class="info-card">
+                    <h3>Información de Red</h3>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Gateway:</span>
+                            <span class="info-value" id="infoGateway">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Mi IP:</span>
+                            <span class="info-value" id="infoMyIP">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">SSID:</span>
+                            <span class="info-value" id="infoSSID">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Rango:</span>
+                            <span class="info-value" id="infoRange">-</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Users Page -->
+        <div class="page" id="page-users">
+            <div class="users-header">
+                <h2>Gestión de Usuarios</h2>
+                <button class="btn-primary" id="btnAddUser">
+                    <i class="fas fa-plus"></i>
+                    Nuevo Usuario
+                </button>
+            </div>
+            
+            <div class="users-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Usuario</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
+                            <th>Último Login</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <!-- User rows here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div class="page" id="page-settings">
+            <div class="settings-grid">
+                <div class="settings-card">
+                    <h3>Red</h3>
+                    <div class="setting-item">
+                        <label>Intervalo de Escaneo (segundos)</label>
+                        <input type="number" value="15" id="settingScanInterval">
+                    </div>
+                    <div class="setting-item">
+                        <label>Interfaz de Red</label>
+                        <input type="text" value="wlan0" id="settingInterface">
+                    </div>
+                </div>
+                
+                <div class="settings-card">
+                    <h3>Seguridad</h3>
+                    <div class="setting-item">
+                        <label>Timeout JWT (minutos)</label>
+                        <input type="number" value="30" id="settingJWTTimeout">
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="setting2FA">
+                            Habilitar 2FA
+                        </label>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn-primary" id="btnSaveSettings">
+                <i class="fas fa-save"></i>
+                Guardar Cambios
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/static/js/api.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>

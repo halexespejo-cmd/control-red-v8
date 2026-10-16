@@ -6,6 +6,8 @@ from sentry_sdk.integrations.fastapi import FastApiIntegration
 from fastapi import FastAPI, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from contextlib import asynccontextmanager
 from sqlalchemy.ext.asyncio import AsyncSession
 from slowapi import Limiter, _rate_limit_exceeded_handler
@@ -133,6 +135,12 @@ app.include_router(tasks_router)
 # Prometheus metrics
 Instrumentator().instrument(app).expose(app)
 
+# Mount static files and templates
+import os
+frontend_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "..", "frontend")
+app.mount("/static", StaticFiles(directory=os.path.join(frontend_path, "static")), name="static")
+templates = Jinja2Templates(directory=os.path.join(frontend_path, "templates"))
+
 
 @app.get("/", tags=["Health"])
 @limiter.limit("100/minute")
@@ -221,6 +229,18 @@ async def get_status(request: Request, db: AsyncSession = Depends(get_db)):
             "driver": "host_lan",
             "enforcement": "error"
         }
+
+
+@app.get("/login", tags=["Frontend"])
+async def login_page(request: Request):
+    """Render login page"""
+    return templates.TemplateResponse("login.html", {"request": request})
+
+
+@app.get("/dashboard", tags=["Frontend"])
+async def dashboard_page(request: Request):
+    """Render dashboard page"""
+    return templates.TemplateResponse("dashboard.html", {"request": request})
 
 
 @app.exception_handler(Exception)
